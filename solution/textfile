@@ -1,0 +1,3 @@
+to create a .net project:
+create a folder and run command [ dotnet new webapi ] for webapi
+run [ dotnet run ] to run the project
