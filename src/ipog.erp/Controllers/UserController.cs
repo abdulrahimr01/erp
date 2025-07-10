@@ -186,7 +186,7 @@ namespace ipog.erp.Controllers
             }
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteUser(long id)
         {
             try
@@ -215,15 +215,9 @@ namespace ipog.erp.Controllers
             }
         }
 
-        [HttpPost("user/status")]
-        public async Task<IActionResult> SetUserActiveStatus(string action, long id)
+        [HttpPatch("active")]
+        public async Task<IActionResult> SetUserActiveStatus(long id)
         {
-            var validActions = new[] { "active", "inactive" };
-            if (!validActions.Contains(action.ToLower()))
-            {
-                return BadRequest("Invalid action. Allowed: active, inactive.");
-            }
-
             try
             {
                 await using var conn = new NpgsqlConnection(_connString);
@@ -233,14 +227,43 @@ namespace ipog.erp.Controllers
                     "SELECT fn_usersbyid(@p_action, @p_id)",
                     conn
                 );
-                cmd.Parameters.AddWithValue("p_action", action);
+                cmd.Parameters.AddWithValue("p_action", "active");
                 cmd.Parameters.AddWithValue("p_id", id);
 
                 var result = await cmd.ExecuteScalarAsync();
                 bool success = result is bool b && b;
 
                 if (success)
-                    return Ok($"User status updated to {action}.");
+                    return Ok($"User status updated to active.");
+                else
+                    return NotFound($"User with ID {id} not found.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = ex.Message });
+            }
+        }
+
+        [HttpPatch("inactive")]
+        public async Task<IActionResult> SetUserinActiveStatus(long id)
+        {
+            try
+            {
+                await using var conn = new NpgsqlConnection(_connString);
+                await conn.OpenAsync();
+
+                await using var cmd = new NpgsqlCommand(
+                    "SELECT fn_usersbyid(@p_action, @p_id)",
+                    conn
+                );
+                cmd.Parameters.AddWithValue("p_action", "inactive");
+                cmd.Parameters.AddWithValue("p_id", id);
+
+                var result = await cmd.ExecuteScalarAsync();
+                bool success = result is bool b && b;
+
+                if (success)
+                    return Ok($"User status updated to inactive.");
                 else
                     return NotFound($"User with ID {id} not found.");
             }
