@@ -627,11 +627,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Workspace\\2025\\New folder\\erp_vs\\ipog.erp\\ipog.erp.csproj",
+      "projectUniqueName": "D:\\Workspace\\2025\\New folder\\erp\\src\\erp_vs\\ipog.erp\\ipog.erp.csproj",
       "projectName": "ipog.erp",
-      "projectPath": "D:\\Workspace\\2025\\New folder\\erp_vs\\ipog.erp\\ipog.erp.csproj",
+      "projectPath": "D:\\Workspace\\2025\\New folder\\erp\\src\\erp_vs\\ipog.erp\\ipog.erp.csproj",
       "packagesPath": "C:\\Users\\ipog\\.nuget\\packages\\",
-      "outputPath": "D:\\Workspace\\2025\\New folder\\erp_vs\\ipog.erp\\obj\\",
+      "outputPath": "D:\\Workspace\\2025\\New folder\\erp\\src\\erp_vs\\ipog.erp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

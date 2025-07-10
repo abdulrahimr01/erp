@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hoZhK1znsE0=",
+  "dgSpecHash": "LQaw1JHUd5M=",
   "success": true,
-  "projectFilePath": "d:\\Workspace\\2025\\New folder\\erp_vs\\ipog.erp\\ipog.erp.csproj",
+  "projectFilePath": "D:\\Workspace\\2025\\New folder\\erp\\src\\erp_vs\\ipog.erp\\ipog.erp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ipog\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\ipog\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.2\\microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
