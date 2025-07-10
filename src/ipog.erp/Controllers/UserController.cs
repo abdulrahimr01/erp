@@ -186,7 +186,7 @@ namespace ipog.erp.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteUser(long id)
         {
             try
@@ -194,17 +194,20 @@ namespace ipog.erp.Controllers
                 await using var conn = new NpgsqlConnection(_connString);
                 await conn.OpenAsync();
 
-                await using var cmd = new NpgsqlCommand("DELETE FROM users WHERE id = @id", conn);
-                cmd.Parameters.AddWithValue("id", id);
+                await using var cmd = new NpgsqlCommand(
+                    "SELECT sp_usersbyid(@p_action, @p_id)",
+                    conn
+                );
+                cmd.Parameters.AddWithValue("p_action", "Delete");
+                cmd.Parameters.AddWithValue("p_id", id);
 
-                var rowsAffected = await cmd.ExecuteNonQueryAsync();
+                var result = await cmd.ExecuteScalarAsync();
+                bool success = result is bool b && b;
 
-                if (rowsAffected > 0)
-                    // return Ok(new { message = "User deleted successfully." });
+                if (success)
                     return Ok("User deleted successfully.");
                 else
-                    // return NotFound(new { message = "User not found." });
-                    return Ok("User not found.");
+                    return NotFound("User not found.");
             }
             catch (Exception ex)
             {
