@@ -195,7 +195,7 @@ namespace ipog.erp.Controllers
                 await conn.OpenAsync();
 
                 await using var cmd = new NpgsqlCommand(
-                    "SELECT sp_usersbyid(@p_action, @p_id)",
+                    "SELECT fn_usersbyid(@p_action, @p_id)",
                     conn
                 );
                 cmd.Parameters.AddWithValue("p_action", "Delete");
@@ -208,6 +208,41 @@ namespace ipog.erp.Controllers
                     return Ok("User deleted successfully.");
                 else
                     return NotFound("User not found.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = ex.Message });
+            }
+        }
+
+        [HttpPost("user/status")]
+        public async Task<IActionResult> SetUserActiveStatus(string action, long id)
+        {
+            var validActions = new[] { "active", "inactive" };
+            if (!validActions.Contains(action.ToLower()))
+            {
+                return BadRequest("Invalid action. Allowed: active, inactive.");
+            }
+
+            try
+            {
+                await using var conn = new NpgsqlConnection(_connString);
+                await conn.OpenAsync();
+
+                await using var cmd = new NpgsqlCommand(
+                    "SELECT fn_usersbyid(@p_action, @p_id)",
+                    conn
+                );
+                cmd.Parameters.AddWithValue("p_action", action);
+                cmd.Parameters.AddWithValue("p_id", id);
+
+                var result = await cmd.ExecuteScalarAsync();
+                bool success = result is bool b && b;
+
+                if (success)
+                    return Ok($"User status updated to {action}.");
+                else
+                    return NotFound($"User with ID {id} not found.");
             }
             catch (Exception ex)
             {
