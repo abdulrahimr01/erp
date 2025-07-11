@@ -27,7 +27,7 @@ namespace ipog.erp.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            UserModelCollection collection = await _iUserService.GetAll();
+            CollectionResponse<UserModelCollection> collection = await _iUserService.GetAll();
             return Ok(collection);
         }
 

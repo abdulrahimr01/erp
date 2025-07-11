@@ -5,7 +5,7 @@ namespace ipog.erp.Workflow.IServices
     public interface IUserService
     {
         Task<GetResponse<GetUserModel>> GetById(long id);
-        Task<UserModelCollection> GetAll();
+        Task<CollectionResponse<UserModelCollection>> GetAll();
         Task<UserModelCollection> GetFilter(PaginationModel paginationModel);
         Task<Response> Insert(UserModel userModel);
         Task<string> Update(UserModel userModel);

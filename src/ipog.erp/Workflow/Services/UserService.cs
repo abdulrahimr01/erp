@@ -49,7 +49,7 @@ namespace ipog.erp.Workflow.Services
             };
         }
 
-        public async Task<UserModelCollection> GetAll()
+        public async Task<CollectionResponse<UserModelCollection>> GetAll()
         {
             List<Dictionary<string, object>> result = await _iUserRepository.GetAll();
             List<User> users = result
@@ -59,7 +59,13 @@ namespace ipog.erp.Workflow.Services
                 UserModelCollection,
                 List<User>
             >(users);
-            return collection;
+            return new CollectionResponse<UserModelCollection>()
+            {
+                Code = 200,
+                Success = true,
+                Message = "Get successfully.",
+                Record = new() { Count = collection.Count, Data = collection },
+            };
         }
 
         public async Task<UserModelCollection> GetFilter(PaginationModel paginationModel)
@@ -83,19 +89,20 @@ namespace ipog.erp.Workflow.Services
             User user = await _mapper.CreateMap<User, UserModel>(userModel);
             bool success = await _iUserRepository.Insert(user);
             if (success)
+            {
                 return new Response()
                 {
                     Code = 200,
                     Success = true,
                     Message = "User inserted successfully.",
                 };
-            else
-                return new Response()
-                {
-                    Code = 200,
-                    Success = false,
-                    Message = "User inserted failed.",
-                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "User inserted failed.",
+            };
         }
 
         public async Task<string> Update(UserModel userModel)
