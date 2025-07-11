@@ -1,6 +1,6 @@
 using Npgsql;
 
-namespace ipog.erp.DataSource
+namespace ipog.erp.DataSource.IRepository
 {
     public class NpgsqlQuery : INpgsqlQuery
     {

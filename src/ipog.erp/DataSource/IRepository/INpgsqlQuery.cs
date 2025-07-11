@@ -1,4 +1,4 @@
-namespace ipog.erp.DataSource
+namespace ipog.erp.DataSource.IRepository
 {
     public interface INpgsqlQuery
     {

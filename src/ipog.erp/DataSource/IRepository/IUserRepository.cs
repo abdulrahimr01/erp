@@ -1,4 +1,6 @@
-namespace ipog.erp.DataSource
+using ipog.erp.Entity;
+
+namespace ipog.erp.DataSource.IRepository
 {
     public interface IUserRepository
     {

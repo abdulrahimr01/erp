@@ -1,4 +1,5 @@
-using ipog.erp.DataSource;
+using ipog.erp.DataSource.IRepository;
+using ipog.erp.Entity;
 using ipog.erp.Extension;
 using Microsoft.AspNetCore.Mvc;
 
