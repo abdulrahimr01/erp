@@ -1,6 +1,5 @@
-using ipog.erp.DataSource.IRepository;
-using ipog.erp.Entity;
-using ipog.erp.Extension;
+using ipog.erp.Models;
+using ipog.erp.Workflow.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ipog.erp.Controllers
@@ -9,118 +8,70 @@ namespace ipog.erp.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
-        private readonly IUserRepository _iUserRepository;
+        private readonly IUserService _iUserService;
 
-        public UserController(ILogger<UserController> logger, IUserRepository iUserRepository)
+        public UserController(IUserService iUserService)
         {
-            _logger = logger;
-            _iUserRepository = iUserRepository;
+            _iUserService = iUserService;
         }
 
         // GET: Get user
         [HttpGet]
         public async Task<IActionResult> GetById(long id)
         {
-            List<Dictionary<string, object>> result = await _iUserRepository.GetById(id);
-            User? user = result
-                .Select(static row => DataMapperExtensions.MapRowToModel<User>(row))
-                .FirstOrDefault();
-            return Ok(user);
+            GetUserModel response = await _iUserService.GetById(id);
+            return Ok(response);
         }
 
         // GET: Get All user
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            List<Dictionary<string, object>> result = await _iUserRepository.GetAll();
-            List<User> users = result
-                .Select(static row => DataMapperExtensions.MapRowToModel<User>(row))
-                .ToList();
-            return Ok(users);
+            UserModelCollection collection = await _iUserService.GetAll();
+            return Ok(collection);
         }
 
         // POST: Filter user
         [HttpPost("Filter")]
-        public async Task<IActionResult> GetFilter([FromBody] Pagination pagination)
+        public async Task<IActionResult> GetFilter([FromBody] PaginationModel paginationModel)
         {
-            List<Dictionary<string, object>> result = await _iUserRepository.GetFilter(pagination);
-            List<User> users = result
-                .Select(static row => DataMapperExtensions.MapRowToModel<User>(row))
-                .ToList();
-            return Ok(users);
+            UserModelCollection collection = await _iUserService.GetFilter(paginationModel);
+            return Ok(collection);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Insert([FromBody] User user)
+        public async Task<IActionResult> Insert([FromBody] UserModel userModel)
         {
-            bool success = await _iUserRepository.Insert(user);
-            if (success)
-                return Ok("User inserted successfully.");
-            else
-                return StatusCode(500, "User insert failed.");
+            string message = await _iUserService.Insert(userModel);
+            return Ok(message);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] User user)
+        public async Task<IActionResult> Update([FromBody] UserModel userModel)
         {
-            bool success = await _iUserRepository.Update(user);
-            if (success)
-                return Ok("User updated successfully.");
-            else
-                return StatusCode(500, "User update failed.");
+            string message = await _iUserService.Update(userModel);
+            return Ok(message);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(long id)
         {
-            try
-            {
-                bool deleted = await _iUserRepository.Delete(id);
-
-                if (deleted)
-                    return Ok("User deleted successfully.");
-                else
-                    return NotFound("User not found.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { error = ex.Message });
-            }
+            string message = await _iUserService.Delete(id);
+            return Ok(message);
         }
 
         [HttpPatch("active")]
         public async Task<IActionResult> SetActiveStatus(long id)
         {
-            try
-            {
-                bool success = await _iUserRepository.SetActiveStatus(id);
-                if (success)
-                    return Ok("User status updated to active.");
-                else
-                    return NotFound($"User not found.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { error = ex.Message });
-            }
+            string message = await _iUserService.SetActiveStatus(id);
+            return Ok(message);
         }
 
         [HttpPatch("inactive")]
         public async Task<IActionResult> SetInActiveStatus(long id)
         {
-            try
-            {
-                bool success = await _iUserRepository.SetInActiveStatus(id);
-                if (success)
-                    return Ok("User status updated to inactive.");
-                else
-                    return NotFound("User not found.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { error = ex.Message });
-            }
+            string message = await _iUserService.SetInActiveStatus(id);
+            return Ok(message);
         }
     }
 }

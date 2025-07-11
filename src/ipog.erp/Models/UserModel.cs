@@ -20,7 +20,7 @@ namespace ipog.erp.Models
         public DateTime ActionDate { get; set; }
     }
 
-    public class CollectionUserModel : List<GetUserModel>
+    public class UserModelCollection : List<GetUserModel>
     {
         public string? ActionBy { get; set; }
         public DateTime ActionDate { get; set; }

@@ -15,16 +15,23 @@ namespace ipog.erp.DataSource.IRepository
 
         public async Task<List<Dictionary<string, object>>> GetById(long id)
         {
-            Dictionary<string, object> parameters = new()
+            try
             {
-                { "p_action", "GETBYID" },
-                { "p_id", id },
-            };
-            List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                "SELECT * FROM fn_usersget(@p_action, @p_id)",
-                parameters
-            );
-            return result;
+                Dictionary<string, object> parameters = new()
+                {
+                    { "p_action", "GETBYID" },
+                    { "p_id", id },
+                };
+                List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
+                    "SELECT * FROM fn_usersget(@p_action, @p_id)",
+                    parameters
+                );
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<List<Dictionary<string, object>>> GetAll()
