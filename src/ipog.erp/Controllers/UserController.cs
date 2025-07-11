@@ -1,5 +1,6 @@
+using ipog.erp.DataSource;
+using ipog.erp.Extension;
 using Microsoft.AspNetCore.Mvc;
-using Npgsql;
 
 namespace ipog.erp.Controllers
 {
@@ -7,39 +8,31 @@ namespace ipog.erp.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly string _connString;
         private readonly ILogger<UserController> _logger;
+        private readonly INpgsqlQuery _inpgsqlQuery;
 
-        public UserController(IConfiguration config, ILogger<UserController> logger)
+        public UserController(ILogger<UserController> logger, INpgsqlQuery inpgsqlQuery)
         {
-            _connString = config.GetConnectionString("DefaultConnection");
             _logger = logger;
+            _inpgsqlQuery = inpgsqlQuery;
         }
 
         // GET: Get user
         [HttpGet]
         public async Task<IActionResult> GetById(long id)
         {
-            User user = new();
-            using var conn = new NpgsqlConnection(_connString);
-            await conn.OpenAsync();
-            using var cmd = new NpgsqlCommand("SELECT * FROM fn_usersget(@p_action, @p_id)", conn);
-            cmd.Parameters.AddWithValue("p_action", "GETBYID");
-            cmd.Parameters.AddWithValue("p_id", id);
-            using var reader = await cmd.ExecuteReaderAsync();
-            if (await reader.ReadAsync())
+            Dictionary<string, object> parameters = new()
             {
-                user = new User
-                {
-                    Name = reader["name"]?.ToString(),
-                    Email = reader["email"]?.ToString(),
-                    Mobile = reader["mobile"]?.ToString(),
-                };
-            }
-            else
-            {
-                return NotFound($"No user found with id {id}");
-            }
+                { "p_action", "GETBYID" },
+                { "p_id", id },
+            };
+            List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
+                "SELECT * FROM fn_usersget(@p_action, @p_id)",
+                parameters
+            );
+            User user = result
+                .Select(static row => DataMapperExtensions.MapRowToModel<User>(row))
+                .FirstOrDefault();
             return Ok(user);
         }
 
@@ -47,27 +40,14 @@ namespace ipog.erp.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            List<User> users = new();
-            using var conn = new NpgsqlConnection(_connString);
-            await conn.OpenAsync();
-            using var cmd = new NpgsqlCommand("SELECT * FROM fn_usersget(@p_action)", conn);
-            cmd.Parameters.AddWithValue("p_action", "GETALL");
-            using var reader = await cmd.ExecuteReaderAsync();
-            if (await reader.ReadAsync())
-            {
-                users.Add(
-                    new User
-                    {
-                        Name = reader["name"]?.ToString(),
-                        Email = reader["email"]?.ToString(),
-                        Mobile = reader["mobile"]?.ToString(),
-                    }
-                );
-            }
-            else
-            {
-                return NotFound($"No user found");
-            }
+            Dictionary<string, object> parameters = new() { { "p_action", "GETALL" } };
+            List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
+                "SELECT * FROM fn_usersget(@p_action)",
+                parameters
+            );
+            List<User> users = result
+                .Select(static row => DataMapperExtensions.MapRowToModel<User>(row))
+                .ToList();
             return Ok(users);
         }
 
@@ -75,34 +55,22 @@ namespace ipog.erp.Controllers
         [HttpPost("Filter")]
         public async Task<IActionResult> GetFilter([FromBody] Pagination pagination)
         {
-            List<User> users = new();
-            using var conn = new NpgsqlConnection(_connString);
-            await conn.OpenAsync();
-            using var cmd = new NpgsqlCommand(
-                "SELECT * FROM fn_usersget(@p_action, @p_id, @p_ordercol, @p_orderdir, @p_take, @p_skip)",
-                conn
+            Dictionary<string, object> parameters = new()
+            {
+                { "p_action", "GETALL" },
+                { "p_id", 0 },
+                { "p_skip", pagination.Skip },
+                { "p_take", pagination.Take },
+                { "p_ordercol", pagination.OrderCol ?? "id" },
+                { "p_orderdir", pagination.OrderDir ?? "ASC" },
+            };
+            List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
+                "SELECT * FROM fn_usersget(@p_action, @p_id, @p_skip, @p_take, @p_ordercol, @p_orderdir)",
+                parameters
             );
-            cmd.Parameters.AddWithValue("p_action", "FILTER");
-            cmd.Parameters.AddWithValue("p_skip", pagination.Skip);
-            cmd.Parameters.AddWithValue("p_take", pagination.Take);
-            cmd.Parameters.AddWithValue("p_ordercol", pagination.OrderCol);
-            cmd.Parameters.AddWithValue("p_orderdir", pagination.OrderDir);
-            using var reader = await cmd.ExecuteReaderAsync();
-            if (await reader.ReadAsync())
-            {
-                users.Add(
-                    new User
-                    {
-                        Name = reader["name"]?.ToString(),
-                        Email = reader["email"]?.ToString(),
-                        Mobile = reader["mobile"]?.ToString(),
-                    }
-                );
-            }
-            else
-            {
-                return NotFound($"No user found");
-            }
+            List<User> users = result
+                .Select(static row => DataMapperExtensions.MapRowToModel<User>(row))
+                .ToList();
             return Ok(users);
         }
 
@@ -111,38 +79,30 @@ namespace ipog.erp.Controllers
         {
             try
             {
-                using var conn = new NpgsqlConnection(_connString);
-                await conn.OpenAsync();
-
-                using var cmd = new NpgsqlCommand(
+                Dictionary<string, object> parameters = new()
+                {
+                    { "p_name", user.Name },
+                    { "p_email", user.Email },
+                    { "p_mobile", user.Mobile },
+                    { "p_password", user.Password },
+                    { "p_address", user.Address },
+                    { "p_roleid", user.RoleId },
+                    { "p_actionby", user.ActionBy },
+                    { "p_actiondate", user.ActionDate },
+                    { "p_isactive", user.IsActive },
+                    { "p_islogin", user.IsLogin },
+                };
+                await _inpgsqlQuery.ExecuteQueryAsync(
                     "CALL sp_users(@p_name, @p_email, @p_mobile, @p_password, @p_address, @p_roleid, @p_actionby, @p_actiondate, @p_isactive, @p_islogin)",
-                    conn
+                    parameters
                 );
-
-                cmd.Parameters.AddWithValue("p_name", user.Name);
-                cmd.Parameters.AddWithValue("p_email", user.Email);
-                cmd.Parameters.AddWithValue("p_mobile", user.Mobile);
-                cmd.Parameters.AddWithValue("p_password", user.Password);
-                cmd.Parameters.AddWithValue("p_address", user.Address);
-                cmd.Parameters.AddWithValue("p_roleid", user.RoleId);
-                cmd.Parameters.AddWithValue("p_actionby", user.ActionBy);
-                cmd.Parameters.Add(
-                    new NpgsqlParameter("p_actiondate", NpgsqlTypes.NpgsqlDbType.Timestamp)
-                    {
-                        Value = DateTime.SpecifyKind(user.ActionDate, DateTimeKind.Unspecified),
-                    }
-                );
-                cmd.Parameters.AddWithValue("p_isactive", user.IsActive);
-                cmd.Parameters.AddWithValue("p_islogin", user.IsLogin);
-
-                await cmd.ExecuteNonQueryAsync();
+                return Ok("User inserted successfully.");
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error: {ex.Message}");
                 return Ok("User insert failed.");
             }
-            return Ok("User inserted successfully.");
         }
 
         [HttpPut]
@@ -150,33 +110,24 @@ namespace ipog.erp.Controllers
         {
             try
             {
-                using var conn = new NpgsqlConnection(_connString);
-                await conn.OpenAsync();
-
-                using var cmd = new NpgsqlCommand(
+                Dictionary<string, object> parameters = new()
+                {
+                    { "p_name", user.Name },
+                    { "p_email", user.Email },
+                    { "p_mobile", user.Mobile },
+                    { "p_password", user.Password },
+                    { "p_address", user.Address },
+                    { "p_roleid", user.RoleId },
+                    { "p_actionby", user.ActionBy },
+                    { "p_actiondate", user.ActionDate },
+                    { "p_isactive", user.IsActive },
+                    { "p_islogin", user.IsLogin },
+                    { "p_id", user.Id },
+                };
+                await _inpgsqlQuery.ExecuteQueryAsync(
                     "CALL sp_users(@p_name, @p_email, @p_mobile, @p_password, @p_address, @p_roleid, @p_actionby, @p_actiondate, @p_isactive, @p_islogin, @p_id)",
-                    conn
+                    parameters
                 );
-
-                cmd.Parameters.AddWithValue("p_name", user.Name);
-                cmd.Parameters.AddWithValue("p_email", user.Email);
-                cmd.Parameters.AddWithValue("p_mobile", user.Mobile);
-                cmd.Parameters.AddWithValue("p_password", user.Password);
-                cmd.Parameters.AddWithValue("p_address", user.Address);
-                cmd.Parameters.AddWithValue("p_roleid", user.RoleId);
-                cmd.Parameters.AddWithValue("p_actionby", user.ActionBy);
-                cmd.Parameters.Add(
-                    new NpgsqlParameter("p_actiondate", NpgsqlTypes.NpgsqlDbType.Timestamp)
-                    {
-                        Value = DateTime.SpecifyKind(user.ActionDate, DateTimeKind.Unspecified),
-                    }
-                );
-                cmd.Parameters.AddWithValue("p_isactive", user.IsActive);
-                cmd.Parameters.AddWithValue("p_islogin", user.IsLogin);
-                cmd.Parameters.AddWithValue("p_id", user.Id);
-
-                await cmd.ExecuteNonQueryAsync();
-
                 return Ok("User updated successfully.");
             }
             catch (Exception ex)
@@ -186,24 +137,20 @@ namespace ipog.erp.Controllers
             }
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteUser(long id)
         {
             try
             {
-                await using var conn = new NpgsqlConnection(_connString);
-                await conn.OpenAsync();
-
-                await using var cmd = new NpgsqlCommand(
+                Dictionary<string, object> parameters = new()
+                {
+                    { "p_action", "Delete" },
+                    { "p_id", id },
+                };
+                bool success = await _inpgsqlQuery.ExecuteScalarAsync(
                     "SELECT fn_usersbyid(@p_action, @p_id)",
-                    conn
+                    parameters
                 );
-                cmd.Parameters.AddWithValue("p_action", "Delete");
-                cmd.Parameters.AddWithValue("p_id", id);
-
-                var result = await cmd.ExecuteScalarAsync();
-                bool success = result is bool b && b;
-
                 if (success)
                     return Ok("User deleted successfully.");
                 else
@@ -220,19 +167,15 @@ namespace ipog.erp.Controllers
         {
             try
             {
-                await using var conn = new NpgsqlConnection(_connString);
-                await conn.OpenAsync();
-
-                await using var cmd = new NpgsqlCommand(
+                Dictionary<string, object> parameters = new()
+                {
+                    { "p_action", "active" },
+                    { "p_id", id },
+                };
+                bool success = await _inpgsqlQuery.ExecuteScalarAsync(
                     "SELECT fn_usersbyid(@p_action, @p_id)",
-                    conn
+                    parameters
                 );
-                cmd.Parameters.AddWithValue("p_action", "active");
-                cmd.Parameters.AddWithValue("p_id", id);
-
-                var result = await cmd.ExecuteScalarAsync();
-                bool success = result is bool b && b;
-
                 if (success)
                     return Ok($"User status updated to active.");
                 else
@@ -249,19 +192,15 @@ namespace ipog.erp.Controllers
         {
             try
             {
-                await using var conn = new NpgsqlConnection(_connString);
-                await conn.OpenAsync();
-
-                await using var cmd = new NpgsqlCommand(
+                Dictionary<string, object> parameters = new()
+                {
+                    { "p_action", "inactive" },
+                    { "p_id", id },
+                };
+                bool success = await _inpgsqlQuery.ExecuteScalarAsync(
                     "SELECT fn_usersbyid(@p_action, @p_id)",
-                    conn
+                    parameters
                 );
-                cmd.Parameters.AddWithValue("p_action", "inactive");
-                cmd.Parameters.AddWithValue("p_id", id);
-
-                var result = await cmd.ExecuteScalarAsync();
-                bool success = result is bool b && b;
-
                 if (success)
                     return Ok($"User status updated to inactive.");
                 else
