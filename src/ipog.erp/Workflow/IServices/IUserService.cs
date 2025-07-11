@@ -4,10 +4,10 @@ namespace ipog.erp.Workflow.IServices
 {
     public interface IUserService
     {
-        Task<GetUserModel> GetById(long id);
+        Task<GetResponse<GetUserModel>> GetById(long id);
         Task<UserModelCollection> GetAll();
         Task<UserModelCollection> GetFilter(PaginationModel paginationModel);
-        Task<string> Insert(UserModel userModel);
+        Task<Response> Insert(UserModel userModel);
         Task<string> Update(UserModel userModel);
         Task<string> Delete(long id);
         Task<string> SetActiveStatus(long id);

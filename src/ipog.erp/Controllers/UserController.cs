@@ -19,7 +19,7 @@ namespace ipog.erp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetById(long id)
         {
-            GetUserModel response = await _iUserService.GetById(id);
+            GetResponse<GetUserModel> response = await _iUserService.GetById(id);
             return Ok(response);
         }
 
@@ -42,8 +42,8 @@ namespace ipog.erp.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] UserModel userModel)
         {
-            string message = await _iUserService.Insert(userModel);
-            return Ok(message);
+            Response response = await _iUserService.Insert(userModel);
+            return Ok(response);
         }
 
         [HttpPut]

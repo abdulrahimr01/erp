@@ -24,14 +24,29 @@ namespace ipog.erp.Workflow.Services
             _iUserRepository = iUserRepository;
         }
 
-        public async Task<GetUserModel> GetById(long id)
+        public async Task<GetResponse<GetUserModel>> GetById(long id)
         {
             List<Dictionary<string, object>> result = await _iUserRepository.GetById(id);
             User? user = result
                 .Select(static row => DataMapperExtensions.MapRowToModel<User>(row))
                 .FirstOrDefault();
+            if (user == null)
+            {
+                return new GetResponse<GetUserModel>()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "No record found",
+                };
+            }
             GetUserModel response = await _mapper.CreateMap<GetUserModel, User>(user);
-            return response;
+            return new GetResponse<GetUserModel>()
+            {
+                Code = 200,
+                Success = true,
+                Message = "Get successfully.",
+                Data = response,
+            };
         }
 
         public async Task<UserModelCollection> GetAll()
@@ -63,14 +78,24 @@ namespace ipog.erp.Workflow.Services
             return collection;
         }
 
-        public async Task<string> Insert(UserModel userModel)
+        public async Task<Response> Insert(UserModel userModel)
         {
             User user = await _mapper.CreateMap<User, UserModel>(userModel);
             bool success = await _iUserRepository.Insert(user);
             if (success)
-                return "User inserted successfully.";
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "User inserted successfully.",
+                };
             else
-                return "User insert failed.";
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "User inserted failed.",
+                };
         }
 
         public async Task<string> Update(UserModel userModel)
