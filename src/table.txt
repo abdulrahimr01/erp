@@ -1,0 +1,113 @@
+-- 1. Customers
+CREATE TABLE customers (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    phone VARCHAR(20),
+    address TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Suppliers
+CREATE TABLE suppliers (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    phone VARCHAR(20),
+    address TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 3. Products
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    unit VARCHAR(50),
+    cost_price DECIMAL(12,2),
+    selling_price DECIMAL(12,2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 4. Purchases (from suppliers)
+CREATE TABLE purchases (
+    id SERIAL PRIMARY KEY,
+    supplier_id INT REFERENCES suppliers(supplier_id),
+    date DATE NOT NULL,
+    total_amount DECIMAL(12,2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 5. Purchase Details (Product-wise)
+CREATE TABLE purchase_items (
+    id SERIAL PRIMARY KEY,
+    purchase_id INT REFERENCES purchases(purchase_id) ON DELETE CASCADE,
+    product_id INT REFERENCES products(product_id),
+    quantity DECIMAL(10,2),
+    price DECIMAL(12,2)
+);
+
+-- 6. Stock (Product stock summary)
+CREATE TABLE stock (
+    id SERIAL PRIMARY KEY,
+    product_id INT REFERENCES products(product_id),
+    quantity DECIMAL(10,2) DEFAULT 0,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 7. Jobs (Print Orders)
+CREATE TABLE jobs (
+    id SERIAL PRIMARY KEY,
+    customer_id INT REFERENCES customers(customer_id),
+    name VARCHAR(255),
+    date DATE NOT NULL,
+    status VARCHAR(50) DEFAULT 'Pending', -- Pending, In Progress, Completed
+    total_amount DECIMAL(12,2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 8. Job Items (Product-wise usage)
+CREATE TABLE job_items (
+    id SERIAL PRIMARY KEY,
+    job_id INT REFERENCES jobs(job_id) ON DELETE CASCADE,
+    product_id INT REFERENCES products(product_id),
+    quantity_used DECIMAL(10,2)
+);
+
+-- 9. Payments (For jobs, from customers)
+CREATE TABLE payments (
+    id SERIAL PRIMARY KEY,
+    customer_id INT REFERENCES customers(customer_id),
+    date DATE NOT NULL,
+    amount_paid DECIMAL(12,2),
+    payment_method VARCHAR(50),
+    remarks TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 10. Payment Allocation (To multiple jobs)
+CREATE TABLE payment_jobs (
+    id SERIAL PRIMARY KEY,
+    payment_id INT REFERENCES payments(payment_id) ON DELETE CASCADE,
+    job_id INT REFERENCES jobs(job_id),
+    amount_allocated DECIMAL(12,2)
+);
+
+-- 11. Supplier Payments (for purchases)
+CREATE TABLE supplier_payments (
+    id SERIAL PRIMARY KEY,
+    supplier_id INT REFERENCES suppliers(supplier_id),
+    date DATE NOT NULL,
+    amount_paid DECIMAL(12,2),
+    payment_method VARCHAR(50),
+    remarks TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 12. Supplier Payment Allocation
+CREATE TABLE supplier_payment_purchases (
+    id SERIAL PRIMARY KEY,
+    supplier_payment_id INT REFERENCES supplier_payments(supplier_payment_id) ON DELETE CASCADE,
+    purchase_id INT REFERENCES purchases(purchase_id),
+    amount_allocated DECIMAL(12,2)
+);

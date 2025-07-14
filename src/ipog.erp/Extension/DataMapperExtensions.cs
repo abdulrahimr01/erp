@@ -9,7 +9,10 @@ namespace ipog.erp.Extension
             var props = typeof(T).GetProperties();
 
             // Normalize dictionary to be case-insensitive
-            var caseInsensitiveRow = row.ToDictionary(static k => k.Key.ToLowerInvariant(), static v => v.Value);
+            var caseInsensitiveRow = row.ToDictionary(
+                static k => k.Key.ToLowerInvariant(),
+                static v => v.Value
+            );
 
             foreach (var prop in props)
             {

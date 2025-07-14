@@ -27,7 +27,9 @@ builder.Services.AddScoped<IMapping, Mapping>();
 
 builder.Services.AddScoped<INpgsqlQuery, NpgsqlQuery>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
+builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 var app = builder.Build();
 

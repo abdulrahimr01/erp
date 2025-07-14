@@ -11,6 +11,9 @@ namespace ipog.erp.Mapping
             CreateMap<User, UserModel>().ReverseMap();
             CreateMap<User, GetUserModel>();
             CreateMap<User, UserModelCollection>();
+            CreateMap<Role, RoleModel>().ReverseMap();
+            CreateMap<Role, GetRoleModel>();
+            CreateMap<Role, RoleModelCollection>();
         }
     }
 }
