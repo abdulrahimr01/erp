@@ -14,6 +14,18 @@ namespace ipog.erp.Mapping
             CreateMap<Role, RoleModel>().ReverseMap();
             CreateMap<Role, GetRoleModel>();
             CreateMap<Role, RoleModelCollection>();
+            CreateMap<Supplier, SupplierModel>().ReverseMap();
+            CreateMap<Supplier, GetSupplierModel>();
+            CreateMap<Supplier, SupplierModelCollection>();
+            CreateMap<Businesstype, BusinesstypeModel>().ReverseMap();
+            CreateMap<Businesstype, GetBusinesstypeModel>();
+            CreateMap<Businesstype, BusinesstypeModelCollection>();
+            CreateMap<Customer, CustomerModel>().ReverseMap();
+            CreateMap<Customer, GetCustomerModel>();
+            CreateMap<Customer, CustomerModelCollection>();
+            CreateMap<Category, CategoryModel>().ReverseMap();
+            CreateMap<Category, GetCategoryModel>();
+            CreateMap<Category, CategoryModelCollection>();
         }
     }
 }

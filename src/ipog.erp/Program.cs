@@ -28,9 +28,16 @@ builder.Services.AddScoped<IMapping, Mapping>();
 builder.Services.AddScoped<INpgsqlQuery, NpgsqlQuery>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<IBusinesstypeRepository, BusinesstypeRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<ISupplierService, SupplierService>();
+builder.Services.AddScoped<IBusinesstypeService, BusinesstypeService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
