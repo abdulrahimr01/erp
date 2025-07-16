@@ -26,6 +26,9 @@ namespace ipog.erp.Mapping
             CreateMap<Category, CategoryModel>().ReverseMap();
             CreateMap<Category, GetCategoryModel>();
             CreateMap<Category, CategoryModelCollection>();
+            CreateMap<Hsn, HsnModel>().ReverseMap();
+            CreateMap<Hsn, GetHsnModel>();
+            CreateMap<Hsn, HsnModelCollection>();
         }
     }
 }
