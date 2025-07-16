@@ -1,0 +1,27 @@
+namespace ipog.bureaucrats.Models
+{
+    public class MenuModel
+    {
+        public long Id { get; set; }
+        public string? Menuname { get; set; }
+        public string? Submenuname { get; set; }
+        public string? Icon { get; set; }
+        public string? Menupath { get; set; }
+        public string? Submenupath { get; set; }
+        public DateTime? Actiondate { get; set; }
+        public string? Actionby { get; set; }
+        public bool IsActive { get; set; }
+    }
+
+    public class GetMenuModel : MenuModel
+    {
+        public string? ActionBy { get; set; }
+        public DateTime ActionDate { get; set; }
+    }
+
+    public class MenuModelCollection : List<GetMenuModel>
+    {
+        public string? ActionBy { get; set; }
+        public DateTime ActionDate { get; set; }
+    }
+}
