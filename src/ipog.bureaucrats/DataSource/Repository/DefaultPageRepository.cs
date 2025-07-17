@@ -71,12 +71,13 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_pagename", defaultpage.Pagename },
                     { "p_pagepath", defaultpage.Pagepath },
                     { "p_label", defaultpage.Label },
+                    { "p_icon", defaultpage.Icon },
                     { "p_actionby", defaultpage.ActionBy },
                     { "p_actiondate", defaultpage.ActionDate },
                     { "p_isactive", defaultpage.IsActive },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_defaultpage(@p_name, @p_actionby, @p_actiondate, @p_isactive)",
+                    "CALL sp_defaultpage(@p_pagename,@p_pagepath,@p_label,@p_icon, @p_isactive,@p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -97,13 +98,14 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_pagename", defaultpage.Pagename },
                     { "p_pagepath", defaultpage.Pagepath },
                     { "p_label", defaultpage.Label },
+                    { "p_icon", defaultpage.Icon },
                     { "p_actionby", defaultpage.ActionBy },
                     { "p_actiondate", defaultpage.ActionDate },
                     { "p_isactive", defaultpage.IsActive },
                     { "p_id", defaultpage.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_defaultpage(@p_name, @p_actionby, @p_actiondate, @p_isactive, @p_id)",
+                    "CALL sp_defaultpage(@p_pagename,@p_pagepath,@p_label,@p_icon, @p_isactive,@p_actionby, @p_actiondate, @p_id)",
                     parameters
                 );
                 return true;
