@@ -76,7 +76,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_isactive", contactinfo.IsActive },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_contactinfo(@p_name, @p_actionby, @p_actiondate, @p_isactive)",
+                    "CALL sp_contactinfo(@p_name, @p_details, @p_color, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -93,27 +93,30 @@ namespace ipog.bureaucrats.DataSource.IRepository
             try
             {
                 Dictionary<string, object> parameters = new()
-                {
-                    { "p_name", contactinfo.Name },
-                    { "p_details", contactinfo.Details },
-                    { "p_color", contactinfo.Color },
-                    { "p_actionby", contactinfo.ActionBy },
-                    { "p_actiondate", contactinfo.ActionDate },
-                    { "p_isactive", contactinfo.IsActive },
-                    { "p_id", contactinfo.Id },
-                };
+        {
+            { "p_name", contactinfo.Name },
+            { "p_details", contactinfo.Details },
+            { "p_color", contactinfo.Color },
+            { "p_isactive", contactinfo.IsActive },
+            { "p_actionby", contactinfo.ActionBy },
+            { "p_actiondate", contactinfo.ActionDate },
+            { "p_id", contactinfo.Id },
+        };
+
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_contactinfo(@p_name, @p_actionby, @p_actiondate, @p_isactive, @p_id)",
+                    "CALL sp_contactinfo(@p_name, @p_details, @p_color, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
                     parameters
                 );
+
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error: {ex.Message}");
+                _logger.LogError($"Error calling sp_contactinfo: {ex.Message}");
                 return false;
             }
         }
+
 
         public async Task<bool> Delete(long id)
         {
