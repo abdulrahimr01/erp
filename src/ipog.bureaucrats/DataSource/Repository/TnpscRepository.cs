@@ -7,7 +7,10 @@ namespace ipog.bureaucrats.DataSource.IRepository
         private readonly ILogger<ITnpscaboutRepository> _logger;
         private readonly INpgsqlQuery _inpgsqlQuery;
 
-        public TnpscaboutRepository(ILogger<ITnpscaboutRepository> logger, INpgsqlQuery inpgsqlQuery)
+        public TnpscaboutRepository(
+            ILogger<ITnpscaboutRepository> logger,
+            INpgsqlQuery inpgsqlQuery
+        )
         {
             _logger = logger;
             _inpgsqlQuery = inpgsqlQuery;
@@ -69,12 +72,12 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
                 {
                     { "p_text", tnpscabout.Text },
-                    { "p_actionby", tnpscabout.Actionby },
-                    { "p_actiondate", tnpscabout.Actiondate },
                     { "p_isactive", tnpscabout.IsActive },
+                    { "p_actionby", tnpscabout.ActionBy },
+                    { "p_actiondate", tnpscabout.ActionDate },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_tnpscabout(@p_text, @p_actionby, @p_actiondate, @p_isactive)",
+                    "CALL sp_tnpscabout(@p_text, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -93,13 +96,13 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
                 {
                     { "p_text", tnpscabout.Text },
-                    { "p_actionby", tnpscabout.Actionby },
-                    { "p_actiondate", tnpscabout.Actiondate },
                     { "p_isactive", tnpscabout.IsActive },
+                    { "p_actionby", tnpscabout.ActionBy },
+                    { "p_actiondate", tnpscabout.ActionDate },
                     { "p_id", tnpscabout.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_tnpscabout(@p_text, @p_actionby, @p_actiondate, @p_isactive, @p_id)",
+                    "CALL sp_tnpscabout(@p_text, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
                     parameters
                 );
                 return true;
