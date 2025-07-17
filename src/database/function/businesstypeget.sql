@@ -1,9 +1,10 @@
--- FUNCTION: public.fn_businesstypeget(character varying, integer, integer, character varying, character varying)
+-- FUNCTION: public.fn_businesstypeget(character varying, bigint, integer, integer, character varying, character varying)
 
--- DROP FUNCTION IF EXISTS public.fn_businesstypeget(character varying, integer, integer, character varying, character varying);
+-- DROP FUNCTION IF EXISTS public.fn_businesstypeget(character varying, bigint, integer, integer, character varying, character varying);
 
 CREATE OR REPLACE FUNCTION public.fn_businesstypeget(
 	p_action character varying,
+	p_id bigint DEFAULT 0,
 	p_skip integer DEFAULT 1,
 	p_take integer DEFAULT 10,
 	p_ordercol character varying DEFAULT 'id'::character varying,
@@ -20,17 +21,17 @@ DECLARE
 BEGIN
 
     -- Get By Id
-    IF p_action = 'GetById' AND p_id IS NOT NULL THEN
+    IF p_action = 'GETBYID' AND p_id IS NOT NULL THEN
             RETURN QUERY SELECT * FROM businesstype WHERE id = p_id;
         END IF;
 
     -- Get All
-    IF p_action = 'Get' THEN
+    IF p_action = 'GETALL' THEN
             RETURN QUERY SELECT * FROM businesstype;
         END IF;
     
     -- Get Filter
-    IF p_action = 'Filter' THEN
+    IF p_action = 'FILTER' THEN
         sql := format(
             'SELECT * FROM businesstype ORDER BY %I %s LIMIT %s OFFSET %s',
             p_ordercol,
@@ -45,5 +46,5 @@ BEGIN
 END;
 $BODY$;
 
-ALTER FUNCTION public.fn_businesstypeget(character varying, integer, integer, character varying, character varying)
+ALTER FUNCTION public.fn_businesstypeget(character varying, bigint, integer, integer, character varying, character varying)
     OWNER TO postgres;

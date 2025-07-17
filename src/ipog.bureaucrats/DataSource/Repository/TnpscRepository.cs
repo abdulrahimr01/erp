@@ -1,13 +1,13 @@
-using ipog.erp.Entity;
+using ipog.bureaucrats.Entity;
 
-namespace ipog.erp.DataSource.IRepository
+namespace ipog.bureaucrats.DataSource.IRepository
 {
-    public class HsnRepository : IHsnRepository
+    public class TnpscaboutRepository : ITnpscaboutRepository
     {
-        private readonly ILogger<IHsnRepository> _logger;
+        private readonly ILogger<ITnpscaboutRepository> _logger;
         private readonly INpgsqlQuery _inpgsqlQuery;
 
-        public HsnRepository(ILogger<IHsnRepository> logger, INpgsqlQuery inpgsqlQuery)
+        public TnpscaboutRepository(ILogger<ITnpscaboutRepository> logger, INpgsqlQuery inpgsqlQuery)
         {
             _logger = logger;
             _inpgsqlQuery = inpgsqlQuery;
@@ -23,7 +23,7 @@ namespace ipog.erp.DataSource.IRepository
                     { "p_id", id },
                 };
                 List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                    "SELECT * FROM fn_hsnget(@p_action, @p_id)",
+                    "SELECT * FROM fn_tnpscaboutget(@p_action, @p_id)",
                     parameters
                 );
                 return result;
@@ -38,7 +38,7 @@ namespace ipog.erp.DataSource.IRepository
         {
             Dictionary<string, object> parameters = new() { { "p_action", "GETALL" } };
             List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                "SELECT * FROM fn_hsnget(@p_action)",
+                "SELECT * FROM fn_tnpscaboutget(@p_action)",
                 parameters
             );
             return result;
@@ -56,58 +56,50 @@ namespace ipog.erp.DataSource.IRepository
                 { "p_orderdir", pagination.OrderDir ?? "ASC" },
             };
             List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                "SELECT * FROM fn_hsnget(@p_action, @p_id, @p_skip, @p_take, @p_ordercol, @p_orderdir)",
+                "SELECT * FROM fn_tnpscaboutget(@p_action, @p_id, @p_skip, @p_take, @p_ordercol, @p_orderdir)",
                 parameters
             );
             return result;
         }
 
-        public async Task<bool> Insert(Hsn hsn)
+        public async Task<bool> Insert(Tnpscabout tnpscabout)
         {
             try
             {
                 Dictionary<string, object> parameters = new()
                 {
-                    { "p_categoryid", hsn.Categoryid },
-                    { "p_name", hsn.Name },
-                    { "p_notes", hsn.Notes },
-                    { "p_gst", hsn.Gst },
-                    { "p_cgst", hsn.Cgst },
-                    { "p_sgst", hsn.Sgst },
-                    { "p_.actionby", hsn.Actionby },
-                    { "p_isactive", hsn.IsActive },
+                    { "p_text", tnpscabout.Text },
+                    { "p_actionby", tnpscabout.Actionby },
+                    { "p_actiondate", tnpscabout.Actiondate },
+                    { "p_isactive", tnpscabout.IsActive },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_hsn(@p_categoryid, @p_name, @p_notes, @p_gst, @p_cgst, @p_sgst, @p_actionby, @p_isactive)",
+                    "CALL sp_tnpscabout(@p_text, @p_actionby, @p_actiondate, @p_isactive)",
                     parameters
                 );
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Hsn insert failed.");
+                _logger.LogError(ex, "tnpscabout insert failed.");
                 return false;
             }
         }
 
-        public async Task<bool> Update(Hsn hsn)
+        public async Task<bool> Update(Tnpscabout tnpscabout)
         {
             try
             {
                 Dictionary<string, object> parameters = new()
                 {
-                    { "p_categoryid", hsn.Categoryid },
-                    { "p_name", hsn.Name }, 
-                    { "p_notes", hsn.Notes },
-                    { "p_gst", hsn.Gst },
-                    { "p_cgst", hsn.Cgst },
-                    { "p_sgst", hsn.Sgst },
-                    { "p_.actionby", hsn.Actionby },
-                    { "p_isactive", hsn.IsActive },
-                    { "p_id", hsn.Id },
+                    { "p_text", tnpscabout.Text },
+                    { "p_actionby", tnpscabout.Actionby },
+                    { "p_actiondate", tnpscabout.Actiondate },
+                    { "p_isactive", tnpscabout.IsActive },
+                    { "p_id", tnpscabout.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_hsn(@p_categoryid, @p_name, @p_notes, @p_gst, @p_cgst, @p_sgst, @p_actionby, @p_isactive, @p_id)",
+                    "CALL sp_tnpscabout(@p_text, @p_actionby, @p_actiondate, @p_isactive, @p_id)",
                     parameters
                 );
                 return true;
@@ -129,14 +121,14 @@ namespace ipog.erp.DataSource.IRepository
                     { "p_id", id },
                 };
                 bool success = await _inpgsqlQuery.ExecuteScalarAsync(
-                    "SELECT fn_hsnbyid(@p_action, @p_id)",
+                    "SELECT fn_tnpscaboutbyid(@p_action, @p_id)",
                     parameters
                 );
                 return success;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting Hsn");
+                _logger.LogError(ex, "Error deleting tnpscabout");
                 throw;
             }
         }
@@ -151,14 +143,14 @@ namespace ipog.erp.DataSource.IRepository
                     { "p_id", id },
                 };
                 bool success = await _inpgsqlQuery.ExecuteScalarAsync(
-                    "SELECT fn_hsnbyid(@p_action, @p_id)",
+                    "SELECT fn_tnpscaboutbyid(@p_action, @p_id)",
                     parameters
                 );
                 return success;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Hsn not found");
+                _logger.LogError(ex, "tnpscabout not found");
                 throw;
             }
         }
@@ -173,14 +165,14 @@ namespace ipog.erp.DataSource.IRepository
                     { "p_id", id },
                 };
                 bool success = await _inpgsqlQuery.ExecuteScalarAsync(
-                    "SELECT fn_hsnbyid(@p_action, @p_id)",
+                    "SELECT fn_tnpscaboutbyid(@p_action, @p_id)",
                     parameters
                 );
                 return success;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Hsn not found");
+                _logger.LogError(ex, "tnpscabout not found");
                 throw;
             }
         }
