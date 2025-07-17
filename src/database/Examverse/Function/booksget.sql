@@ -24,12 +24,12 @@ RETURN QUERY SELECT * FROM books WHERE id=p_id;
 END IF;
 
 --getAll
-IF p_action="GETALL" THEN
+IF p_action='GETALL' THEN
 RETURN QUERY SELECT * FROM books;
 END IF;
 
 --getFilter
-IF p_action="FILTER" THEN
+IF p_action='FILTER' THEN
 sql:=format(
 'SELECT * FROM books ORDER BY %I %s LIMIT %s OFFSET %s',
 p_ordercol,

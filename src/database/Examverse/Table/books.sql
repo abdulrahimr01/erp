@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public.books
 (
-    id integer NOT NULL DEFAULT nextval('books_id_seq'::regclass),
+    id bigint NOT NULL DEFAULT nextval('books_id_seq'::regclass),
     title character varying(100) COLLATE pg_catalog."default" NOT NULL,
     name character varying(100) COLLATE pg_catalog."default" NOT NULL,
     author character varying(100) COLLATE pg_catalog."default",

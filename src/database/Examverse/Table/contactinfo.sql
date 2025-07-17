@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public.contactinfo
 (
-    id integer NOT NULL DEFAULT nextval('contactinfo_id_seq'::regclass),
+    id bigint NOT NULL DEFAULT nextval('contactinfo_id_seq'::regclass),
     name character varying(50) COLLATE pg_catalog."default" NOT NULL,
     details character varying(100) COLLATE pg_catalog."default" NOT NULL,
     color character varying(20) COLLATE pg_catalog."default" NOT NULL,
