@@ -11,8 +11,8 @@ namespace ipog.bureaucrats.Entity
         public string? Description { get; set; }
         public string? Details { get; set; }
         public string? Stocks { get; set; }
-        public DateTime? Actiondate { get; set; }
-        public string? Actionby { get; set; }
         public bool IsActive { get; set; }
+        public string? ActionBy { get; set; }
+        public DateTime? ActionDate { get; set; }
     }
 }
