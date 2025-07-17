@@ -5,8 +5,8 @@ namespace ipog.bureaucrats.Models
         public long Id { get; set; }
         public string? Exam { get; set; }
         public string? Name { get; set; }
-        public string? Actionby { get; set; }
-        public DateTime? Actiondate { get; set; }
+        public string? ActionBy { get; set; }
+        public DateTime? ActionDate { get; set; }
         public bool IsActive { get; set; }
     }
 
