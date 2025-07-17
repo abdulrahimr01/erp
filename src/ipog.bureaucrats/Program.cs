@@ -31,7 +31,17 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 builder.Services.AddScoped<IExamsRepository, ExamsRepository>();
 builder.Services.AddScoped<IPapersRepository, PapersRepository>();
+builder.Services.AddScoped<IBooksRepository, BooksRepository>();
+builder.Services.AddScoped<ICoursevideosRepository, CoursevideosRepository>();
+builder.Services.AddScoped<IHomeaboutRepository, HomeaboutRepository>();
+builder.Services.AddScoped<ITnpscaboutRepository, TnpscaboutRepository>();
+builder.Services.AddScoped<IUpscaboutRepository, UpscaboutRepository>();
 
+builder.Services.AddScoped<IUpscaboutService, UpscaboutService>();
+builder.Services.AddScoped<ITnpscaboutService, TnpscaboutService>();
+builder.Services.AddScoped<IHomeaboutService, HomeaboutService>();
+builder.Services.AddScoped<ICoursevideosService, CoursevideosService>();
+builder.Services.AddScoped<IBooksService, BooksService>();
 builder.Services.AddScoped<IPapersService, PapersService>();
 builder.Services.AddScoped<IExamsService, ExamsService>();
 builder.Services.AddScoped<IMenuService, MenuService>();
