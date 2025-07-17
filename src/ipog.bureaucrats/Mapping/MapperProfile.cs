@@ -26,6 +26,9 @@ namespace ipog.bureaucrats.Mapping
             CreateMap<ContactInfo, ContactInfoModel>().ReverseMap();
             CreateMap<ContactInfo, GetContactInfoModel>();
             CreateMap<ContactInfo, ContactInfoModelCollection>();
+            CreateMap<DefaultPage, DefaultPageModel>().ReverseMap();
+            CreateMap<DefaultPage, GetDefaultPageModel>();
+            CreateMap<DefaultPage, DefaultPageModelCollection>();
         }
     }
 }

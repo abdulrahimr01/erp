@@ -2,12 +2,12 @@ using ipog.bureaucrats.Entity;
 
 namespace ipog.bureaucrats.DataSource.IRepository
 {
-    public class ContactInfoRepository : IContactInfoRepository
+    public class DefaultPageRepository : IDefaultPageRepository
     {
-        private readonly ILogger<IContactInfoRepository> _logger;
+        private readonly ILogger<IDefaultPageRepository> _logger;
         private readonly INpgsqlQuery _inpgsqlQuery;
 
-        public ContactInfoRepository(ILogger<IContactInfoRepository> logger, INpgsqlQuery inpgsqlQuery)
+        public DefaultPageRepository(ILogger<IDefaultPageRepository> logger, INpgsqlQuery inpgsqlQuery)
         {
             _logger = logger;
             _inpgsqlQuery = inpgsqlQuery;
@@ -23,7 +23,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", id },
                 };
                 List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                    "SELECT * FROM fn_contactinfoget(@p_action, @p_id)",
+                    "SELECT * FROM fn_defaultpageget(@p_action, @p_id)",
                     parameters
                 );
                 return result;
@@ -38,7 +38,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
         {
             Dictionary<string, object> parameters = new() { { "p_action", "GETALL" } };
             List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                "SELECT * FROM fn_contactinfoget(@p_action)",
+                "SELECT * FROM fn_defaultpageget(@p_action)",
                 parameters
             );
             return result;
@@ -56,54 +56,54 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 { "p_orderdir", pagination.OrderDir ?? "ASC" },
             };
             List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                "SELECT * FROM fn_contactinfoget(@p_action, @p_id, @p_skip, @p_take, @p_ordercol, @p_orderdir)",
+                "SELECT * FROM fn_defaultpageget(@p_action, @p_id, @p_skip, @p_take, @p_ordercol, @p_orderdir)",
                 parameters
             );
             return result;
         }
 
-        public async Task<bool> Insert(ContactInfo contactinfo)
+        public async Task<bool> Insert(DefaultPage defaultpage)
         {
             try
             {
                 Dictionary<string, object> parameters = new()
                 {
-                    { "p_name", contactinfo.Name },
-                    { "p_details", contactinfo.Details },
-                    { "p_color", contactinfo.Color },
-                    { "p_actionby", contactinfo.ActionBy },
-                    { "p_actiondate", contactinfo.ActionDate },
-                    { "p_isactive", contactinfo.IsActive },
+                    { "p_pagename", defaultpage.Pagename },
+                    { "p_pagepath", defaultpage.Pagepath },
+                    { "p_label", defaultpage.Label },
+                    { "p_actionby", defaultpage.ActionBy },
+                    { "p_actiondate", defaultpage.ActionDate },
+                    { "p_isactive", defaultpage.IsActive },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_contactinfo(@p_name, @p_actionby, @p_actiondate, @p_isactive)",
+                    "CALL sp_defaultpage(@p_name, @p_actionby, @p_actiondate, @p_isactive)",
                     parameters
                 );
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "ContactInfo insert failed.");
+                _logger.LogError(ex, "DefaultPage insert failed.");
                 return false;
             }
         }
 
-        public async Task<bool> Update(ContactInfo contactinfo)
+        public async Task<bool> Update(DefaultPage defaultpage)
         {
             try
             {
                 Dictionary<string, object> parameters = new()
                 {
-                    { "p_name", contactinfo.Name },
-                    { "p_details", contactinfo.Details },
-                    { "p_color", contactinfo.Color },
-                    { "p_actionby", contactinfo.ActionBy },
-                    { "p_actiondate", contactinfo.ActionDate },
-                    { "p_isactive", contactinfo.IsActive },
-                    { "p_id", contactinfo.Id },
+                    { "p_pagename", defaultpage.Pagename },
+                    { "p_pagepath", defaultpage.Pagepath },
+                    { "p_label", defaultpage.Label },
+                    { "p_actionby", defaultpage.ActionBy },
+                    { "p_actiondate", defaultpage.ActionDate },
+                    { "p_isactive", defaultpage.IsActive },
+                    { "p_id", defaultpage.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_contactinfo(@p_name, @p_actionby, @p_actiondate, @p_isactive, @p_id)",
+                    "CALL sp_defaultpage(@p_name, @p_actionby, @p_actiondate, @p_isactive, @p_id)",
                     parameters
                 );
                 return true;
@@ -125,14 +125,14 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", id },
                 };
                 bool success = await _inpgsqlQuery.ExecuteScalarAsync(
-                    "SELECT fn_contactinfobyid(@p_action, @p_id)",
+                    "SELECT fn_defaultpagebyid(@p_action, @p_id)",
                     parameters
                 );
                 return success;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting ContactInfo");
+                _logger.LogError(ex, "Error deleting DefaultPage");
                 throw;
             }
         }
@@ -147,14 +147,14 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", id },
                 };
                 bool success = await _inpgsqlQuery.ExecuteScalarAsync(
-                    "SELECT fn_contactinfobyid(@p_action, @p_id)",
+                    "SELECT fn_defaultpagebyid(@p_action, @p_id)",
                     parameters
                 );
                 return success;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "ContactInfo not found");
+                _logger.LogError(ex, "DefaultPage not found");
                 throw;
             }
         }
@@ -169,14 +169,14 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", id },
                 };
                 bool success = await _inpgsqlQuery.ExecuteScalarAsync(
-                    "SELECT fn_contactinfobyid(@p_action, @p_id)",
+                    "SELECT fn_defaultpagebyid(@p_action, @p_id)",
                     parameters
                 );
                 return success;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "ContactInfo not found");
+                _logger.LogError(ex, "DefaultPage not found");
                 throw;
             }
         }
