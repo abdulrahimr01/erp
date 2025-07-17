@@ -70,15 +70,15 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 {
                     { "p_menuname", menu.Menuname },
                     { "p_submenuname", menu.Submenuname },
-                    { "p_icon", menu.Icon },
                     { "p_menupath", menu.Menupath },
                     { "p_submenupath", menu.Submenupath },
+                    { "p_icon", menu.Icon },
                     { "p_actiondate", menu.Actiondate },
                     { "p_actionby", menu.Actionby },
                     { "p_isactive", menu.IsActive },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_menu(@p_menuname, @p_submenuname, @p_icon, @p_menupath, @p_submenupath, @p_actiondate, @p_actionby, @p_isactive)",
+                    "CALL sp_menu(@p_menuname, @p_submenuname,@p_menupath, @p_submenupath, @p_icon , @p_isactive, @p_actionby,  @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -98,16 +98,16 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 {
                     { "p_menuname", menu.Menuname },
                     { "p_submenuname", menu.Submenuname },
-                    { "p_icon", menu.Icon },
                     { "p_menupath", menu.Menupath },
                     { "p_submenupath", menu.Submenupath },
+                    { "p_icon", menu.Icon },
                     { "p_actiondate", menu.Actiondate },
                     { "p_actionby", menu.Actionby },
                     { "p_isactive", menu.IsActive },
                     { "p_id", menu.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_menu(@p_menuname, @p_submenuname, @p_icon, @p_menupath, @p_submenupath, @p_actiondate, @p_actionby, @p_isactive, @p_id)",
+                    "CALL sp_menu(@p_menuname, @p_submenuname, @p_menupath, @p_submenupath,@p_icon, @p_isactive,@p_actionby, @p_actiondate,  @p_id)",
                     parameters
                 );
                 return true;

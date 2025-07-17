@@ -16,8 +16,8 @@ BEGIN
 
 --insert
 IF p_id=0 THEN
-INSERT INTO contactinfo(id,name,details,color,isactive,actionby,actiondate)
-VALUES(p_id,p_name,p_details,p_color,p_isactive,p_actionby,p_actiondate);
+INSERT INTO contactinfo(name,details,color,isactive,actionby,actiondate)
+VALUES(p_name,p_details,p_color,p_isactive,p_actionby,p_actiondate);
 END IF;
 
 --update

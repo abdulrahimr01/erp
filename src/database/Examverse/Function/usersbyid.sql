@@ -1,3 +1,7 @@
+-- FUNCTION: public.fn_usersbyid(character varying, bigint)
+
+-- DROP FUNCTION IF EXISTS public.fn_usersbyid(character varying, bigint);
+
 CREATE OR REPLACE FUNCTION public.fn_usersbyid(
 	p_action character varying,
 	p_id bigint)
@@ -31,4 +35,7 @@ RETURN affected_rows>0;
 END IF;
 RETURN FALSE;
 END
-$BODY$
+$BODY$;
+
+ALTER FUNCTION public.fn_usersbyid(character varying, bigint)
+    OWNER TO postgres;
