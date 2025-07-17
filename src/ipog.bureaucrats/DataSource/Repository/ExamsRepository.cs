@@ -74,7 +74,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_isactive", exams.IsActive },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_exams(@p_name, @p_actionby, @p_actiondate, @p_isactive)",
+                    "CALL sp_exams(@p_name, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -99,7 +99,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", exams.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_exams(@p_name, @p_actionby, @p_actiondate, @p_isactive, @p_id)",
+                    "CALL sp_exams(@p_name,@p_isactive, @p_actionby, @p_actiondate, @p_id)",
                     parameters
                 );
                 return true;
