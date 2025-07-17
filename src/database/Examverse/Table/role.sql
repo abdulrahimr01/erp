@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public.role
 (
-    id integer NOT NULL DEFAULT nextval('role_id_seq'::regclass),
+    id bigint NOT NULL DEFAULT nextval('role_id_seq'::regclass),
     name character varying(100) COLLATE pg_catalog."default" NOT NULL,
     notes character varying(200) COLLATE pg_catalog."default",
     isactive boolean NOT NULL,

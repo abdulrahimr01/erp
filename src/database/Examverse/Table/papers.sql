@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public.papers
 (
-    id integer NOT NULL DEFAULT nextval('papers_id_seq'::regclass),
+    id bigint NOT NULL DEFAULT nextval('papers_id_seq'::regclass),
     exam character varying(50) COLLATE pg_catalog."default" NOT NULL,
     name character varying(100) COLLATE pg_catalog."default" NOT NULL,
     isactive boolean NOT NULL,

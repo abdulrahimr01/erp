@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public.exams
 (
-    id integer NOT NULL DEFAULT nextval('exams_id_seq'::regclass),
+    id bigint NOT NULL DEFAULT nextval('exams_id_seq'::regclass),
     name character varying(50) COLLATE pg_catalog."default" NOT NULL,
     isactive boolean NOT NULL,
     actionby character varying(50) COLLATE pg_catalog."default" NOT NULL,

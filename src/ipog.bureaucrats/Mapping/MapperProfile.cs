@@ -23,6 +23,9 @@ namespace ipog.bureaucrats.Mapping
             CreateMap<Papers, PapersModel>().ReverseMap();
             CreateMap<Papers, GetPapersModel>();
             CreateMap<Papers, PapersModelCollection>();
+            CreateMap<ContactInfo, ContactInfoModel>().ReverseMap();
+            CreateMap<ContactInfo, GetContactInfoModel>();
+            CreateMap<ContactInfo, ContactInfoModelCollection>();
         }
     }
 }

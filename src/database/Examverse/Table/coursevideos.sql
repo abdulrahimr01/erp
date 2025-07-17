@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public.coursevideos
 (
-    id integer NOT NULL DEFAULT nextval('coursevideos_id_seq'::regclass),
+    id bigint NOT NULL DEFAULT nextval('coursevideos_id_seq'::regclass),
     title character varying(50) COLLATE pg_catalog."default" NOT NULL,
     youtubevideoid character varying(50) COLLATE pg_catalog."default" NOT NULL,
     description character varying(200) COLLATE pg_catalog."default" NOT NULL,

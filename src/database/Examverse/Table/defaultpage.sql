@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public.defaultpage
 (
-    id integer NOT NULL DEFAULT nextval('defaultpage_id_seq'::regclass),
+    id bigint NOT NULL DEFAULT nextval('defaultpage_id_seq'::regclass),
     pagename character varying(50) COLLATE pg_catalog."default" NOT NULL,
     pagepath character varying(100) COLLATE pg_catalog."default" NOT NULL,
     label character varying(100) COLLATE pg_catalog."default" NOT NULL,

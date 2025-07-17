@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public.menu
 (
-    id integer NOT NULL DEFAULT nextval('menu_id_seq'::regclass),
+    id bigint NOT NULL DEFAULT nextval('menu_id_seq'::regclass),
     menuname character varying(50) COLLATE pg_catalog."default" NOT NULL,
     submenuname character varying(50) COLLATE pg_catalog."default" NOT NULL,
     icon character varying(100) COLLATE pg_catalog."default",
