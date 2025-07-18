@@ -4,15 +4,15 @@
 
 CREATE TABLE IF NOT EXISTS public.menu
 (
-    id bigint NOT NULL DEFAULT nextval('menu_id_seq'::regclass),
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
     menuname character varying(50) COLLATE pg_catalog."default" NOT NULL,
     submenuname character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    menupath character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    submenupath character varying(100) COLLATE pg_catalog."default" NOT NULL,
     icon character varying(100) COLLATE pg_catalog."default",
     isactive boolean NOT NULL,
     actionby character varying(50) COLLATE pg_catalog."default" NOT NULL,
     actiondate timestamp without time zone NOT NULL,
-    menupath character varying(100) COLLATE pg_catalog."default",
-    submenupath character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT menu_pkey PRIMARY KEY (id)
 )
 

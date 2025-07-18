@@ -1,3 +1,7 @@
+-- FUNCTION: public.fn_rolebyid(character varying, bigint)
+
+-- DROP FUNCTION IF EXISTS public.fn_rolebyid(character varying, bigint);
+
 CREATE OR REPLACE FUNCTION public.fn_rolebyid(
 	p_action character varying,
 	p_id bigint)
@@ -31,3 +35,6 @@ END IF;
 RETURN FALSE;
 END
 $BODY$;
+
+ALTER FUNCTION public.fn_rolebyid(character varying, bigint)
+    OWNER TO postgres;

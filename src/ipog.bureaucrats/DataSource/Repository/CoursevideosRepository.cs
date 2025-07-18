@@ -79,7 +79,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_isactive", coursevideos.IsActive },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_coursevideos(@p_title, @p_youtubevideoid, @p_description, @p_actionby, @p_actiondate, @p_isactive)",
+                    "CALL sp_coursevideos(@p_title, @p_youtubevideoid, @p_description, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -106,7 +106,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", coursevideos.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_coursevideos(@p_title, @p_youtubevideoid, @p_description, @p_actionby, @p_actiondate, @p_isactive, @p_id)",
+                    "CALL sp_coursevideos(@p_title, @p_youtubevideoid, @p_description, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
                     parameters
                 );
                 return true;

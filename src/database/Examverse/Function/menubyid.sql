@@ -1,9 +1,14 @@
+-- FUNCTION: public.fn_menubyid(character varying, bigint)
+
+-- DROP FUNCTION IF EXISTS public.fn_menubyid(character varying, bigint);
+
 CREATE OR REPLACE FUNCTION public.fn_menubyid(
-p_action character varying,
-p_id bigint)
-RETURNS boolean
-LANGUAGE 'plpgsql'
-VOLATILE PARALLEL UNSAFE
+	p_action character varying,
+	p_id bigint)
+    RETURNS boolean
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
 AS $BODY$
 DECLARE affected_rows INT;
 BEGIN
@@ -30,4 +35,7 @@ END IF;
 RETURN FALSE;
 
 END
-$BODY$
+$BODY$;
+
+ALTER FUNCTION public.fn_menubyid(character varying, bigint)
+    OWNER TO postgres;

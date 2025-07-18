@@ -20,16 +20,16 @@ DECLARE sql TEXT;
 BEGIN
 --getbyid
 IF p_action='GETBYID' AND p_id IS NOT NULL THEN
-RETURN QUERY SELECT * FROM tnpscabout WHERE id=p_id;
+RETURN QUERY SELECT * FROM tnpscabout WHERE tnpscabout.id=p_id;
 END IF;
 
 --getAll
-IF p_action="GETALL" THEN
+IF p_action='GETALL' THEN
 RETURN QUERY SELECT * FROM tnpscabout;
 END IF;
 
 --getFilter
-IF p_action="FILTER" THEN
+IF p_action='FILTER' THEN
 sql:=format(
 'SELECT * FROM tnpscabout ORDER BY %I %s LIMIT %s OFFSET %s',
 p_ordercol,

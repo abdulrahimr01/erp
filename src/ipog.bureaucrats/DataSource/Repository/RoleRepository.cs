@@ -69,11 +69,13 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
                 {
                     { "p_name", role.Name },
-                    { "p_mobile", role.Notes },
+                    { "p_notes", role.Notes },
                     { "p_isactive", role.IsActive },
+                    { "p_actionby", role.ActionBy },
+                    { "p_actiondate", role.ActionDate },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_role(@p_name, @p_notes, @p_isactive)",
+                    "CALL sp_role(@p_name, @p_notes, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -92,12 +94,14 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
                 {
                     { "p_name", role.Name },
-                    { "p_email", role.Notes },
+                    { "p_notes", role.Notes },
                     { "p_isactive", role.IsActive },
+                    { "p_actionby", role.ActionBy },
+                    { "p_actiondate", role.ActionDate },
                     { "p_id", role.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_role(@p_name, @p_notes, @p_isactive, @p_id)",
+                    "CALL sp_role(@p_name, @p_notes, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
                     parameters
                 );
                 return true;

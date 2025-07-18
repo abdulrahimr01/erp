@@ -20,7 +20,7 @@ DECLARE sql TEXT;
 BEGIN
 --getbyid
 IF p_action='GETBYID' AND p_id IS NOT NULL THEN
-RETURN QUERY SELECT * FROM role WHERE id=p_id;
+RETURN QUERY SELECT * FROM role WHERE role.id=p_id;
 END IF;
 
 --getAll
