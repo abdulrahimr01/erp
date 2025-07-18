@@ -70,9 +70,9 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 {
                     { "p_name", user.Name },
                     { "p_email", user.Email },
+                    { "p_address", user.Address },
                     { "p_mobile", user.Mobile },
                     { "p_password", user.Password },
-                    { "p_address", user.Address },
                     { "p_roleid", user.RoleId },
                     { "p_actionby", user.ActionBy },
                     { "p_actiondate", user.ActionDate },
@@ -80,7 +80,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_islogin", user.IsLogin },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_users(@p_name, @p_email, @p_mobile, @p_password, @p_address, @p_roleid, @p_actionby, @p_actiondate, @p_isactive, @p_islogin)",
+                    "CALL sp_users(@p_name, @p_email, @p_address, @p_mobile, @p_password, @p_roleid, @p_actionby, @p_actiondate, @p_isactive, @p_islogin)",
                     parameters
                 );
                 return true;
@@ -100,9 +100,9 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 {
                     { "p_name", user.Name },
                     { "p_email", user.Email },
+                    { "p_address", user.Address },
                     { "p_mobile", user.Mobile },
                     { "p_password", user.Password },
-                    { "p_address", user.Address },
                     { "p_roleid", user.RoleId },
                     { "p_actionby", user.ActionBy },
                     { "p_actiondate", user.ActionDate },
@@ -111,7 +111,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", user.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_users(@p_name, @p_email, @p_mobile, @p_password, @p_address, @p_roleid, @p_actionby, @p_actiondate, @p_isactive, @p_islogin, @p_id)",
+                    "CALL sp_users(@p_name, @p_email, @p_address, @p_mobile, @p_password, @p_roleid, @p_actionby, @p_actiondate, @p_isactive, @p_islogin, @p_id)",
                     parameters
                 );
                 return true;

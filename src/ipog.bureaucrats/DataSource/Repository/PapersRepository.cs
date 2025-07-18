@@ -68,14 +68,14 @@ namespace ipog.bureaucrats.DataSource.IRepository
             {
                 Dictionary<string, object> parameters = new()
                 {
-                    { "p_name", papers.Name },
                     { "p_exam", papers.Exam },
-                    { "p_actionby", papers.Actionby },
-                    { "p_actiondate", papers.Actiondate },
+                    { "p_name", papers.Name },
                     { "p_isactive", papers.IsActive },
+                    { "p_actionby", papers.ActionBy },
+                    { "p_actiondate", papers.ActionDate },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_papers(@p_name, @p_exam, @p_actionby, @p_actiondate, @p_isactive)",
+                    "CALL sp_papers(@p_exam, @p_name, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -93,15 +93,15 @@ namespace ipog.bureaucrats.DataSource.IRepository
             {
                 Dictionary<string, object> parameters = new()
                 {
+                    { "p_exam", papers.Exam },
                     { "p_name", papers.Name },
-                    { "p_name", papers.Exam },
-                    { "p_actionby", papers.Actionby },
-                    { "p_actiondate", papers.Actiondate },
                     { "p_isactive", papers.IsActive },
+                    { "p_actionby", papers.ActionBy },
+                    { "p_actiondate", papers.ActionDate },
                     { "p_id", papers.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_papers(@p_name, @p_exam, @p_actionby, @p_actiondate, @p_isactive, @p_id)",
+                    "CALL sp_papers(@p_exam, @p_name, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
                     parameters
                 );
                 return true;

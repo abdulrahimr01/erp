@@ -69,12 +69,12 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
                 {
                     { "p_text", upscabout.Text },
-                    { "p_actionby", upscabout.Actionby },
-                    { "p_actiondate", upscabout.Actiondate },
                     { "p_isactive", upscabout.IsActive },
+                    { "p_actionby", upscabout.ActionBy },
+                    { "p_actiondate", upscabout.ActionDate },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_upscabout(@p_text, @p_actionby, @p_actiondate, @p_isactive)",
+                    "CALL sp_upscabout(@p_text, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -93,13 +93,13 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
                 {
                     { "p_text", upscabout.Text },
-                    { "p_actionby", upscabout.Actionby },
-                    { "p_actiondate", upscabout.Actiondate },
                     { "p_isactive", upscabout.IsActive },
+                    { "p_actionby", upscabout.ActionBy },
+                    { "p_actiondate", upscabout.ActionDate },
                     { "p_id", upscabout.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_upscabout(@p_text, @p_actionby, @p_actiondate, @p_isactive, @p_id)",
+                    "CALL sp_upscabout(@p_text, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
                     parameters
                 );
                 return true;

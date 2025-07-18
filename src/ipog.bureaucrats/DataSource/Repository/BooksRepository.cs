@@ -76,13 +76,12 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_description", books.Description },
                     { "p_details", books.Details },
                     { "p_stocks", books.Stocks },
-                    { "p_actionby", books.Actionby },
-                    { "p_actiondate", books.Actiondate },
                     { "p_isactive", books.IsActive },
-                    { "p_id", books.Id },
+                    { "p_actionby", books.ActionBy },
+                    { "p_actiondate", books.ActionDate },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_books(@p_id,@p_title, @p_name, @p_author, @p_price,@p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate)",
+                "CALL sp_books(@p_title, @p_name, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -108,13 +107,13 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_description", books.Description },
                     { "p_details", books.Details },
                     { "p_stocks", books.Stocks },
-                    { "p_actionby", books.Actionby },
-                    { "p_actiondate", books.Actiondate },
                     { "p_isactive", books.IsActive },
+                    { "p_actionby", books.ActionBy },
+                    { "p_actiondate", books.ActionDate },
                     { "p_id", books.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_books(@p_title, @p_name, @p_author,@p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
+                    "CALL sp_books(@p_title, @p_name, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
                     parameters
                 );
                 return true;
