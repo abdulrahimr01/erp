@@ -73,9 +73,9 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_menupath", menu.Menupath },
                     { "p_submenupath", menu.Submenupath },
                     { "p_icon", menu.Icon },
-                    { "p_actiondate", menu.Actiondate },
-                    { "p_actionby", menu.Actionby },
                     { "p_isactive", menu.IsActive },
+                    { "p_actionby", menu.Actionby },
+                    { "p_actiondate", menu.Actiondate },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
                     "CALL sp_menu(@p_menuname, @p_submenuname,@p_menupath, @p_submenupath, @p_icon , @p_isactive, @p_actionby,  @p_actiondate)",
@@ -101,9 +101,9 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_menupath", menu.Menupath },
                     { "p_submenupath", menu.Submenupath },
                     { "p_icon", menu.Icon },
-                    { "p_actiondate", menu.Actiondate },
-                    { "p_actionby", menu.Actionby },
                     { "p_isactive", menu.IsActive },
+                    { "p_actionby", menu.Actionby },
+                    { "p_actiondate", menu.Actiondate },
                     { "p_id", menu.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
