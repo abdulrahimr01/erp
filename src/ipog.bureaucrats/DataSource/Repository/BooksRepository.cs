@@ -48,7 +48,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
         {
             Dictionary<string, object> parameters = new()
             {
-                { "p_action", "GETALL" },
+                { "p_action", "FILTER" },
                 { "p_id", 0 },
                 { "p_skip", pagination.Skip },
                 { "p_take", pagination.Take },
@@ -81,7 +81,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_actiondate", books.ActionDate },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_books(@p_title, @p_name, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate)",
+                "CALL sp_books(@p_title, @p_name, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;

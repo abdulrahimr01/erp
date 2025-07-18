@@ -14,14 +14,14 @@ BEGIN
 
 --insert
 IF p_id=0 THEN
-INSERT INTO tnpscabout(id,text,isactive,actionby,actiondate)
-VALUES(p_id,p_text,p_isactive,p_actionby,p_actiondate);
+INSERT INTO tnpscabout(text, isactive, actionby, actiondate)
+VALUES(p_text, p_isactive, p_actionby, p_actiondate);
 END IF;
 
 --update
 IF p_id>0 AND EXISTS (SELECT 1 FROM tnpscabout WHERE id=p_id) THEN
 UPDATE tnpscabout 
-SET text=p_text,isactive=p_isactive,actionby=p_isactionby,actiondate=p.actiondate
+SET text = p_text, isactive = p_isactive, actionby = p_isactionby, actiondate = p_actiondate
 WHERE id=p_id;
 END IF;
 

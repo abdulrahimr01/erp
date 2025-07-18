@@ -74,7 +74,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_isactive", homeabout.IsActive },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_homeabout(@p_text, @p_actionby, @p_actiondate, @p_isactive)",
+                    "CALL sp_homeabout(@p_text, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -99,7 +99,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", homeabout.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_homeabout(@p_text, @p_actionby, @p_actiondate, @p_isactive, @p_id)",
+                    "CALL sp_homeabout(@p_text, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
                     parameters
                 );
                 return true;

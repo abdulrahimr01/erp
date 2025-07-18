@@ -20,7 +20,7 @@ DECLARE sql TEXT;
 BEGIN
 --getbyID
 IF p_action='GETBYID' AND p_id IS NOT NULL THEN
-RETURN QUERY SELECT * FROM users WHERE id=p_id;
+RETURN QUERY SELECT * FROM users WHERE users.id=p_id;
 END IF;
 
 --getAll

@@ -20,13 +20,13 @@ BEGIN
 
 --Insert
 IF p_id = 0 THEN
-INSERT INTO users(id,name,email,mobile,password,address,roleid,actionby,actiondate,isactive,islogin) 
-VALUES (p_id,p_name,p_email,p_mobile,p_password,p_address,p_roleid,p_actionby,p_actiondate,p_isactive,p_islogin);
+INSERT INTO users(name, email, address, mobile, password, roleid, actionby, actiondate, isactive, islogin) 
+VALUES (p_name, p_email, p_address, p_mobile, p_password, p_roleid, p_actionby, p_actiondate, p_isactive, p_islogin);
 END IF;
 
 --update
-IF p_id>0 AND EXISTS (SELECT 1 FROM users WHERE id=p_id) THEN
-UPDATE users SET name=p_name,email=p_email,mobile=p_mobile,password=p_password,address=p_address,roleid=p_roleid,actionby=p_actionby,actiondate=p_actiondate,isactive=p_isactive,islogin=p_islogin 
+IF p_id > 0 AND EXISTS (SELECT 1 FROM users WHERE id=p_id) THEN
+UPDATE users SET name = p_name, email = p_email, address = p_address, mobile = p_mobile, password = p_password, roleid = p_roleid, actionby = p_actionby, actiondate = p_actiondate, isactive = p_isactive, islogin = p_islogin 
 WHERE id=p_id;
 END IF;
 
