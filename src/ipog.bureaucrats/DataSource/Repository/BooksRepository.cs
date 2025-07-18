@@ -48,7 +48,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
         {
             Dictionary<string, object> parameters = new()
             {
-                { "p_action", "GETALL" },
+                { "p_action", "FILTER" },
                 { "p_id", 0 },
                 { "p_skip", pagination.Skip },
                 { "p_take", pagination.Take },
