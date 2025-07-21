@@ -5,9 +5,10 @@
 CREATE TABLE IF NOT EXISTS public.coursevideos
 (
     id bigint NOT NULL DEFAULT nextval('coursevideos_id_seq'::regclass),
+    coursename character varying(100) COLLATE pg_catalog."default" NOT NULL,
     title character varying(50) COLLATE pg_catalog."default" NOT NULL,
     youtubevideoid character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    description character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(500) COLLATE pg_catalog."default" NOT NULL,
     isactive boolean NOT NULL,
     actionby character varying(50) COLLATE pg_catalog."default" NOT NULL,
     actiondate timestamp without time zone NOT NULL,
