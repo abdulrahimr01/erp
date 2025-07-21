@@ -59,7 +59,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("AllowAnyCorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();

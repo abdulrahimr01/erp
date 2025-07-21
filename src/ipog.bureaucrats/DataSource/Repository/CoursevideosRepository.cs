@@ -71,6 +71,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
             {
                 Dictionary<string, object> parameters = new()
                 {
+                    { "p_coursename", coursevideos.Coursename },
                     { "p_title", coursevideos.Title },
                     { "p_youtubevideoid", coursevideos.Youtubevideoid },
                     { "p_description", coursevideos.Description },
@@ -79,7 +80,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_isactive", coursevideos.IsActive },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_coursevideos(@p_title, @p_youtubevideoid, @p_description, @p_isactive, @p_actionby, @p_actiondate)",
+                    "CALL sp_coursevideos(@p_coursename,@p_title, @p_youtubevideoid, @p_description, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -97,6 +98,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
             {
                 Dictionary<string, object> parameters = new()
                 {
+                    { "p_coursename", coursevideos.Coursename },
                     { "p_title", coursevideos.Title },
                     { "p_youtubevideoid", coursevideos.Youtubevideoid },
                     { "p_description", coursevideos.Description },
@@ -106,7 +108,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", coursevideos.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_coursevideos(@p_title, @p_youtubevideoid, @p_description, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
+                    "CALL sp_coursevideos(@p_coursename,@p_title, @p_youtubevideoid, @p_description, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
                     parameters
                 );
                 return true;
