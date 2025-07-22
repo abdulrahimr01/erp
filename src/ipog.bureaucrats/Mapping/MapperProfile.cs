@@ -64,6 +64,9 @@ namespace ipog.bureaucrats.Mapping
             CreateMap<Upsccoursevideos, GetUpsccoursevideosModel>();
             CreateMap<Upsccoursevideos, UpsccoursevideosModelCollection>();
 
+            CreateMap<Wishlist, WishlistModel>().ReverseMap();
+            CreateMap<Wishlist, GetWishlistModel>();
+            CreateMap<Wishlist, WishlistModelCollection>();
             CreateMap<PaginationModel, Pagination>().ReverseMap();
         }
     }
