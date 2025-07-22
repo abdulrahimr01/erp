@@ -14,5 +14,8 @@ namespace ipog.bureaucrats.Entity
         public bool IsActive { get; set; }
         public string? ActionBy { get; set; }
         public DateTime? ActionDate { get; set; }
+        public byte[]? FrontImage { get; set; }
+        public byte[]? BackImage { get; set; }
+
     }
 }

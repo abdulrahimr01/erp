@@ -79,9 +79,11 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_isactive", books.IsActive },
                     { "p_actionby", books.ActionBy },
                     { "p_actiondate", books.ActionDate },
+                    { "p_frontimage", books.FrontImage },
+                    { "p_backimage", books.BackImage },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_books(@p_title, @p_name, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate)",
+                    "CALL sp_books(@p_title, @p_name, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate,@p_frontimage,@p_backimage)",
                     parameters
                 );
                 return true;
@@ -110,10 +112,12 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_isactive", books.IsActive },
                     { "p_actionby", books.ActionBy },
                     { "p_actiondate", books.ActionDate },
+                    { "p_frontimage", books.FrontImage },
+                    { "p_backimage", books.BackImage },
                     { "p_id", books.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_books(@p_title, @p_name, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
+                    "CALL sp_books(@p_title, @p_name, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate,@p_frontimage,@p_backimage, @p_id)",
                     parameters
                 );
                 return true;

@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS public.books
     isactive boolean NOT NULL,
     actionby character varying(50) COLLATE pg_catalog."default" NOT NULL,
     actiondate timestamp without time zone NOT NULL,
+    frontimage bytea,
+    backimage bytea,
     CONSTRAINT books_pkey PRIMARY KEY (id)
 )
 
