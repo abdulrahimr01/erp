@@ -56,6 +56,10 @@ namespace ipog.bureaucrats.Mapping
             CreateMap<Upscabout, GetUpscaboutModel>();
             CreateMap<Upscabout, UpscaboutModelCollection>();
 
+            CreateMap<Tnpsccoursevideos, TnpsccoursevideosModel>().ReverseMap();
+            CreateMap<Tnpsccoursevideos, GetTnpsccoursevideosModel>();
+            CreateMap<Tnpsccoursevideos, TnpsccoursevideosModelCollection>();
+
             CreateMap<PaginationModel, Pagination>().ReverseMap();
         }
     }
