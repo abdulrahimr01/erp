@@ -39,7 +39,9 @@ builder.Services.AddScoped<IHomeaboutRepository, HomeaboutRepository>();
 builder.Services.AddScoped<ITnpscaboutRepository, TnpscaboutRepository>();
 builder.Services.AddScoped<IUpscaboutRepository, UpscaboutRepository>();
 builder.Services.AddScoped<ITnpsccoursevideosRepository, TnpsccoursevideosRepository>();
+builder.Services.AddScoped<IUpsccoursevideosRepository, UpsccoursevideosRepository>();
 
+builder.Services.AddScoped<IUpsccoursevideosService, UpsccoursevideosService>();
 builder.Services.AddScoped<ITnpsccoursevideosService, TnpsccoursevideosService>();
 builder.Services.AddScoped<IUpscaboutService, UpscaboutService>();
 builder.Services.AddScoped<ITnpscaboutService, TnpscaboutService>();
