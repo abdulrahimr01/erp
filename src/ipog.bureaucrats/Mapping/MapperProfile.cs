@@ -68,6 +68,10 @@ namespace ipog.bureaucrats.Mapping
             CreateMap<Wishlist, GetWishlistModel>();
             CreateMap<Wishlist, WishlistModelCollection>();
             CreateMap<PaginationModel, Pagination>().ReverseMap();
+
+            CreateMap<Cartpage, CartpageModel>().ReverseMap();
+            CreateMap<Cartpage, GetCartpageModel>();
+            CreateMap<Cartpage, CartpageModelCollection>();
         }
     }
 }

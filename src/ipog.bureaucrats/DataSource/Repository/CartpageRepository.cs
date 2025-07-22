@@ -2,12 +2,12 @@ using ipog.bureaucrats.Entity;
 
 namespace ipog.bureaucrats.DataSource.IRepository
 {
-    public class BooksRepository : IBooksRepository
+    public class CartpageRepository : ICartpageRepository
     {
-        private readonly ILogger<IBooksRepository> _logger;
+        private readonly ILogger<ICartpageRepository> _logger;
         private readonly INpgsqlQuery _inpgsqlQuery;
 
-        public BooksRepository(ILogger<IBooksRepository> logger, INpgsqlQuery inpgsqlQuery)
+        public CartpageRepository(ILogger<ICartpageRepository> logger, INpgsqlQuery inpgsqlQuery)
         {
             _logger = logger;
             _inpgsqlQuery = inpgsqlQuery;
@@ -23,7 +23,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", id },
                 };
                 List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                    "SELECT * FROM fn_booksget(@p_action, @p_id)",
+                    "SELECT * FROM fn_cartpageget(@p_action, @p_id)",
                     parameters
                 );
                 return result;
@@ -38,7 +38,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
         {
             Dictionary<string, object> parameters = new() { { "p_action", "GETALL" } };
             List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                "SELECT * FROM fn_booksget(@p_action)",
+                "SELECT * FROM fn_cartpageget(@p_action)",
                 parameters
             );
             return result;
@@ -56,64 +56,56 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 { "p_orderdir", pagination.OrderDir ?? "ASC" },
             };
             List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                "SELECT * FROM fn_booksget(@p_action, @p_id, @p_skip, @p_take, @p_ordercol, @p_orderdir)",
+                "SELECT * FROM fn_cartpageget(@p_action, @p_id, @p_skip, @p_take, @p_ordercol, @p_orderdir)",
                 parameters
             );
             return result;
         }
 
-        public async Task<bool> Insert(Books books)
+        public async Task<bool> Insert(Cartpage cartpage)
         {
             try
             {
                 Dictionary<string, object> parameters = new()
                 {
-                    { "p_title", books.Title },
-                    { "p_name", books.Name },
-                    { "p_author", books.Author },
-                    { "p_price", books.Price },
-                    { "p_originalprice", books.Originalprice },
-                    { "p_description", books.Description },
-                    { "p_details", books.Details },
-                    { "p_stocks", books.Stocks },
-                    { "p_isactive", books.IsActive },
-                    { "p_actionby", books.ActionBy },
-                    { "p_actiondate", books.ActionDate },
+                    { "p_userid", cartpage.Userid },
+                    { "p_productid", cartpage.Productid },
+                    { "p_quantity", cartpage.Quantity },
+                    { "p_price", cartpage.Price },
+                    { "p_originalprice", cartpage.Originalprice },
+                    { "p_actionby", cartpage.ActionBy },
+                    { "p_actiondate", cartpage.ActionDate },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_books(@p_title, @p_name, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate)",
+                    "CALL sp_cartpage(@p_userid, @p_productid, @p_quantity, @p_price, @p_originalprice, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Books insert failed.");
+                _logger.LogError(ex, "cartpage insert failed.");
                 return false;
             }
         }
 
-        public async Task<bool> Update(Books books)
+        public async Task<bool> Update(Cartpage cartpage)
         {
             try
             {
                 Dictionary<string, object> parameters = new()
                 {
-                    { "p_title", books.Title },
-                    { "p_name", books.Name },
-                    { "p_author", books.Author },
-                    { "p_price", books.Price },
-                    { "p_originalprice", books.Originalprice },
-                    { "p_description", books.Description },
-                    { "p_details", books.Details },
-                    { "p_stocks", books.Stocks },
-                    { "p_isactive", books.IsActive },
-                    { "p_actionby", books.ActionBy },
-                    { "p_actiondate", books.ActionDate },
-                    { "p_id", books.Id },
+                    { "p_userid", cartpage.Userid },
+                    { "p_productid", cartpage.Productid },
+                    { "p_quantity", cartpage.Quantity },
+                    { "p_price", cartpage.Price },
+                    { "p_originalprice", cartpage.Originalprice },
+                    { "p_actionby", cartpage.ActionBy },
+                    { "p_actiondate", cartpage.ActionDate },
+                    { "p_id", cartpage.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_books(@p_title, @p_name, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate, @p_id)",
+                    "CALL sp_cartpage(@p_userid, @p_productid, @p_quantity, @p_price, @p_originalprice, @p_actionby, @p_actiondate, @p_id)",
                     parameters
                 );
                 return true;
@@ -135,14 +127,14 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", id },
                 };
                 bool success = await _inpgsqlQuery.ExecuteScalarAsync(
-                    "SELECT fn_booksbyid(@p_action, @p_id)",
+                    "SELECT fn_cartpagebyid(@p_action, @p_id)",
                     parameters
                 );
                 return success;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting books");
+                _logger.LogError(ex, "Error deleting cartpage");
                 throw;
             }
         }
@@ -157,14 +149,14 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", id },
                 };
                 bool success = await _inpgsqlQuery.ExecuteScalarAsync(
-                    "SELECT fn_booksbyid(@p_action, @p_id)",
+                    "SELECT fn_cartpagebyid(@p_action, @p_id)",
                     parameters
                 );
                 return success;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "books not found");
+                _logger.LogError(ex, "cartpage not found");
                 throw;
             }
         }
@@ -179,14 +171,14 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", id },
                 };
                 bool success = await _inpgsqlQuery.ExecuteScalarAsync(
-                    "SELECT fn_booksbyid(@p_action, @p_id)",
+                    "SELECT fn_cartpagebyid(@p_action, @p_id)",
                     parameters
                 );
                 return success;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "books not found");
+                _logger.LogError(ex, "cartpage not found");
                 throw;
             }
         }
