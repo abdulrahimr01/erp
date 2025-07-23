@@ -84,6 +84,64 @@ namespace ipog.erp.Workflow.Services
             return collection;
         }
 
+        public async Task<GetResponse<GetUserModel>> UserLogin(UserLoginModel requestModel)
+        {
+            UserLogin request = await _mapper.CreateMap<UserLogin, UserLoginModel>(requestModel);
+            List<Dictionary<string, object>> result = await _iUserRepository.UserLogin(request);
+            User? user = result
+                .Select(static row => DataMapperExtensions.MapRowToModel<User>(row))
+                .FirstOrDefault();
+            if (user == null)
+            {
+                return new GetResponse<GetUserModel>()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Invalid User Credential",
+                };
+            }
+            GetUserModel response = await _mapper.CreateMap<GetUserModel, User>(user);
+            return new GetResponse<GetUserModel>()
+            {
+                Code = 200,
+                Success = true,
+                Message = "Login successfully.",
+                Data = response,
+            };
+        }
+
+        public async Task<GetResponse<GetUserModel>> UpdatePassword(
+            UpdatePasswordModel requestModel
+        )
+        {
+            UpdatePassword request = await _mapper.CreateMap<UpdatePassword, UpdatePasswordModel>(
+                requestModel
+            );
+            List<Dictionary<string, object>> result = await _iUserRepository.UpdatePassword(
+                request
+            );
+            User? user = result
+                .Select(static row => DataMapperExtensions.MapRowToModel<User>(row))
+                .FirstOrDefault();
+            if (user == null)
+            {
+                return new GetResponse<GetUserModel>()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Invalid Password",
+                };
+            }
+            GetUserModel response = await _mapper.CreateMap<GetUserModel, User>(user);
+            return new GetResponse<GetUserModel>()
+            {
+                Code = 200,
+                Success = true,
+                Message = "Password Updated successfully.",
+                Data = response,
+            };
+        }
+
         public async Task<Response> Insert(UserModel userModel)
         {
             User user = await _mapper.CreateMap<User, UserModel>(userModel);

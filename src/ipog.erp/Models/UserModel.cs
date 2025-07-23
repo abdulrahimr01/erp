@@ -20,9 +20,17 @@ namespace ipog.erp.Models
         public DateTime ActionDate { get; set; }
     }
 
-    public class UserModelCollection : List<GetUserModel>
+    public class UserModelCollection : List<GetUserModel> { }
+
+    public class UserLoginModel
     {
-        public string? ActionBy { get; set; }
-        public DateTime ActionDate { get; set; }
+        public string? UserName { get; set; }
+        public string? Password { get; set; }
+    }
+
+    public class UpdatePasswordModel
+    {
+        public string? UserName { get; set; }
+        public string? NewPassword { get; set; }
     }
 }
