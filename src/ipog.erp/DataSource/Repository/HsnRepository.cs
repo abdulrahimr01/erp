@@ -74,7 +74,7 @@ namespace ipog.erp.DataSource.IRepository
                     { "p_gst", hsn.Gst },
                     { "p_cgst", hsn.Cgst },
                     { "p_sgst", hsn.Sgst },
-                    { "p_.actionby", hsn.Actionby },
+                    { "p_actionby", hsn.ActionBy },
                     { "p_isactive", hsn.IsActive },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
@@ -97,12 +97,12 @@ namespace ipog.erp.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
                 {
                     { "p_categoryid", hsn.Categoryid },
-                    { "p_name", hsn.Name }, 
+                    { "p_name", hsn.Name },
                     { "p_notes", hsn.Notes },
                     { "p_gst", hsn.Gst },
                     { "p_cgst", hsn.Cgst },
                     { "p_sgst", hsn.Sgst },
-                    { "p_.actionby", hsn.Actionby },
+                    { "p_actionby", hsn.ActionBy },
                     { "p_isactive", hsn.IsActive },
                     { "p_id", hsn.Id },
                 };

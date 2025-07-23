@@ -76,7 +76,7 @@ namespace ipog.erp.DataSource.IRepository
                     { "p_contact", customer.Contact },
                     { "p_mobile", customer.Mobile },
                     { "p_address", customer.Address },
-                    { "p_actionby", customer.Actionby },
+                    { "p_actionby", customer.ActionBy },
                     { "p_isactive", customer.IsActive },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
@@ -106,7 +106,7 @@ namespace ipog.erp.DataSource.IRepository
                     { "p_contact", customer.Contact },
                     { "p_mobile", customer.Mobile },
                     { "p_address", customer.Address },
-                    { "p_actionby", customer.Actionby },
+                    { "p_actionby", customer.ActionBy },
                     { "p_isactive", customer.IsActive },
                     { "p_id", customer.Id },
                 };

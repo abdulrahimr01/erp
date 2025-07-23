@@ -9,7 +9,7 @@ namespace ipog.erp.Entity
         public string? Gst { get; set; }
         public string? Sgst { get; set; }
         public string? Cgst { get; set; }
-        public string? Actionby { get; set; }
+        public string? ActionBy { get; set; }
         public bool IsActive { get; set; }
     }
 }

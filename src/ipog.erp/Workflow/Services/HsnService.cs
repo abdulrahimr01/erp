@@ -55,10 +55,9 @@ namespace ipog.erp.Workflow.Services
             List<Hsn> hsn = result
                 .Select(static row => DataMapperExtensions.MapRowToModel<Hsn>(row))
                 .ToList();
-            HsnModelCollection collection = await _mapper.CreateMap<
-                HsnModelCollection,
-                List<Hsn>
-            >(hsn);
+            HsnModelCollection collection = await _mapper.CreateMap<HsnModelCollection, List<Hsn>>(
+                hsn
+            );
             return new CollectionResponse<HsnModelCollection>()
             {
                 Code = 200,
@@ -77,10 +76,9 @@ namespace ipog.erp.Workflow.Services
             List<Hsn> hsn = result
                 .Select(static row => DataMapperExtensions.MapRowToModel<Hsn>(row))
                 .ToList();
-            HsnModelCollection collection = await _mapper.CreateMap<
-                HsnModelCollection,
-                List<Hsn>
-            >(hsn);
+            HsnModelCollection collection = await _mapper.CreateMap<HsnModelCollection, List<Hsn>>(
+                hsn
+            );
             return collection;
         }
 

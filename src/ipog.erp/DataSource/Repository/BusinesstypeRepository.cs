@@ -73,7 +73,7 @@ namespace ipog.erp.DataSource.IRepository
                 {
                     { "p_name", businesstype.Name },
                     { "p_notes", businesstype.Notes },
-                    { "p_actionby", businesstype.Actionby },
+                    { "p_actionby", businesstype.ActionBy },
                     { "p_isactive", businesstype.IsActive },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
@@ -98,7 +98,7 @@ namespace ipog.erp.DataSource.IRepository
                     { "p_name", businesstype.Name },
                     { "p_notes", businesstype.Notes },
                     { "p_isactive", businesstype.IsActive },
-                    { "p_actionby", businesstype.Actionby },
+                    { "p_actionby", businesstype.ActionBy },
                     { "p_id", businesstype.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
