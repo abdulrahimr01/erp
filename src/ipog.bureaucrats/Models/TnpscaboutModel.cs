@@ -11,8 +11,8 @@ namespace ipog.bureaucrats.Models
 
     public class GetTnpscaboutModel : TnpscaboutModel
     {
-        public string? ActionBy { get; set; }
-        public DateTime ActionDate { get; set; }
+        public new string? ActionBy { get; set; }
+        public new DateTime ActionDate { get; set; }
     }
 
     public class TnpscaboutModelCollection : List<GetTnpscaboutModel>
