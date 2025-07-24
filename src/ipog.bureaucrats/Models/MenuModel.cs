@@ -11,6 +11,7 @@ namespace ipog.bureaucrats.Models
         public DateTime? ActionDate { get; set; }
         public string? ActionBy { get; set; }
         public bool IsActive { get; set; }
+        public string? UserType { get; set; }
     }
 
     public class GetMenuModel : MenuModel

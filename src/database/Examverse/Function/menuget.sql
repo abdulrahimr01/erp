@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION public.fn_menuget(
 	p_take integer DEFAULT 10,
 	p_ordercol character varying DEFAULT 'id'::character varying,
 	p_orderdir character varying DEFAULT 'ASC'::character varying)
-    RETURNS TABLE(id bigint, menuname character varying, submenuname character varying, menupath character varying, submenupath character varying, icon character varying, isactive boolean, actionby character varying, actiondate timestamp without time zone) 
+    RETURNS TABLE(id bigint, menuname character varying, submenuname character varying, menupath character varying, submenupath character varying, icon character varying, isactive boolean, actionby character varying, actiondate timestamp without time zone, usertype character varying) 
     LANGUAGE 'plpgsql'
     COST 100
     VOLATILE PARALLEL UNSAFE
