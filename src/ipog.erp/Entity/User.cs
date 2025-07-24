@@ -22,9 +22,8 @@ namespace ipog.erp.Entity
         public string? Password { get; set; }
     }
 
-    public class UpdatePassword
+    public class UpdatePassword : UserLogin
     {
-        public string? UserName { get; set; }
         public string? NewPassword { get; set; }
     }
 }

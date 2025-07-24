@@ -28,9 +28,8 @@ namespace ipog.erp.Models
         public string? Password { get; set; }
     }
 
-    public class UpdatePasswordModel
+    public class UpdatePasswordModel : UserLoginModel
     {
-        public string? UserName { get; set; }
         public string? NewPassword { get; set; }
     }
 }
