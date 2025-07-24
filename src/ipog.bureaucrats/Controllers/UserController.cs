@@ -39,6 +39,22 @@ namespace ipog.bureaucrats.Controllers
             return Ok(collection);
         }
 
+        // GET: Login user
+        [HttpPost("LoginUser")]
+        public async Task<IActionResult> GetById(UserLoginModel requestModel)
+        {
+            GetResponse<GetUserModel> response = await _iUserService.UserLogin(requestModel);
+            return Ok(response);
+        }
+
+        // GET: Update Password
+        [HttpPost("UpdatePassword")]
+        public async Task<IActionResult> GetById(UpdatePasswordModel requestModel)
+        {
+            GetResponse<GetUserModel> response = await _iUserService.UpdatePassword(requestModel);
+            return Ok(response);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] UserModel userModel)
         {

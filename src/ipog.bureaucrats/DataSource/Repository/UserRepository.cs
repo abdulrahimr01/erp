@@ -62,6 +62,37 @@ namespace ipog.bureaucrats.DataSource.IRepository
             return result;
         }
 
+        public async Task<List<Dictionary<string, object>>> UserLogin(UserLogin request)
+        {
+            Dictionary<string, object> parameters = new()
+            {
+                { "p_action", "login" },
+                { "p_username", request.UserName },
+                { "p_password", request.Password },
+            };
+            List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
+                "SELECT * FROM fn_login(@p_action,  @p_username, @p_password)",
+                parameters
+            );
+            return result;
+        }
+
+        public async Task<List<Dictionary<string, object>>> UpdatePassword(UpdatePassword request)
+        {
+            Dictionary<string, object> parameters = new()
+            {
+                { "p_action", "password" },
+                { "p_username", request.UserName },
+                { "p_password", request.Password },
+                { "p_newpassword", request.NewPassword },
+            };
+            List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
+                "SELECT * FROM fn_login(@p_action, @p_username, @p_password, @p_newpassword)",
+                parameters
+            );
+            return result;
+        }
+
         public async Task<bool> Insert(User user)
         {
             try
