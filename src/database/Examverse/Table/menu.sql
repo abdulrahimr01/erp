@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS public.menu
     isactive boolean NOT NULL,
     actionby character varying(50) COLLATE pg_catalog."default" NOT NULL,
     actiondate timestamp without time zone NOT NULL,
+    usertype character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT menu_pkey PRIMARY KEY (id)
 )
 

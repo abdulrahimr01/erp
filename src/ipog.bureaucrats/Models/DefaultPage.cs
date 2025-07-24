@@ -14,8 +14,8 @@ namespace ipog.bureaucrats.Models
 
     public class GetDefaultPageModel : DefaultPageModel
     {
-        public string? ActionBy { get; set; }
-        public DateTime ActionDate { get; set; }
+        public new string? ActionBy { get; set; }
+        public new DateTime ActionDate { get; set; }
     }
 
     public class DefaultPageModelCollection : List<GetDefaultPageModel>
