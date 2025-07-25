@@ -7,6 +7,8 @@ namespace ipog.bureaucrats.Workflow.IServices
         Task<GetResponse<GetUserModel>> GetById(long id);
         Task<CollectionResponse<UserModelCollection>> GetAll();
         Task<UserModelCollection> GetFilter(PaginationModel paginationModel);
+        Task<GetResponse<GetUserModel>> UserLogin(UserLoginModel request);
+        Task<GetResponse<GetUserModel>> UpdatePassword(UpdatePasswordModel requestModel);
         Task<Response> Insert(UserModel userModel);
         Task<string> Update(UserModel userModel);
         Task<string> Delete(long id);

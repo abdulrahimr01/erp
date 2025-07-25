@@ -11,6 +11,8 @@ namespace ipog.bureaucrats.Mapping
             CreateMap<User, UserModel>().ReverseMap();
             CreateMap<User, GetUserModel>();
             CreateMap<User, UserModelCollection>();
+            CreateMap<UserLogin, UserLoginModel>().ReverseMap();
+            CreateMap<UpdatePassword, UpdatePasswordModel>().ReverseMap();
 
             CreateMap<Role, RoleModel>().ReverseMap();
             CreateMap<Role, GetRoleModel>();
