@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public.homeabout
 (
-    id bigint NOT NULL DEFAULT nextval('contactinfo_id_seq'::regclass),
+    id bigint NOT NULL DEFAULT nextval('homeabout_id_seq'::regclass),
     text character varying(500) COLLATE pg_catalog."default" NOT NULL,
     isactive boolean NOT NULL,
     actionby character varying(50) COLLATE pg_catalog."default" NOT NULL,
