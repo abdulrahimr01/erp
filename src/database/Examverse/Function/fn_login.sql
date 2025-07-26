@@ -27,8 +27,8 @@ BEGIN
     ELSIF p_action = 'password' THEN
         UPDATE users
         SET password = p_newpassword
-        WHERE (email = p_username OR mobile = p_username)
-          AND password = p_password;
+        WHERE (users.email = p_username OR users.mobile = p_username)
+          AND users.password = p_password;
 
         RETURN QUERY
         SELECT u.id, u.name, u.email, u.mobile, u.address,
