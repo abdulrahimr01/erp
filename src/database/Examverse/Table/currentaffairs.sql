@@ -5,6 +5,7 @@
 CREATE TABLE IF NOT EXISTS public.currentaffairs
 (
     id bigint NOT NULL DEFAULT nextval('currentaffairs_id_seq'::regclass),
+    date timestamp without time zone NOT NULL,
     title character varying COLLATE pg_catalog."default" NOT NULL,
     slug character varying COLLATE pg_catalog."default" NOT NULL,
     content character varying COLLATE pg_catalog."default" NOT NULL,
@@ -13,7 +14,6 @@ CREATE TABLE IF NOT EXISTS public.currentaffairs
     isactive boolean NOT NULL,
     actionby character varying(50) COLLATE pg_catalog."default" NOT NULL,
     actiondate timestamp without time zone NOT NULL,
-    date timestamp without time zone NOT NULL,
     CONSTRAINT currentaffairs_pkey PRIMARY KEY (id)
 )
 
