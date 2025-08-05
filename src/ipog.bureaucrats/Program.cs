@@ -42,6 +42,7 @@ builder.Services.AddScoped<ITnpsccoursevideosRepository, TnpsccoursevideosReposi
 builder.Services.AddScoped<IUpsccoursevideosRepository, UpsccoursevideosRepository>();
 builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
 builder.Services.AddScoped<ICartpageRepository, CartpageRepository>();
+builder.Services.AddScoped<ICurrentAffairsRepository, CurrentAffairsRepository>();
 
 builder.Services.AddScoped<ICartpageService, CartpageService>();
 builder.Services.AddScoped<IWishlistService, WishlistService>();
@@ -59,6 +60,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IContactInfoService, ContactInfoService>();
 builder.Services.AddScoped<IDefaultPageService, DefaultPageService>();
+builder.Services.AddScoped<ICurrentAffairsService, CurrentAffairsService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
