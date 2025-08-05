@@ -74,6 +74,10 @@ namespace ipog.bureaucrats.Mapping
             CreateMap<Cartpage, CartpageModel>().ReverseMap();
             CreateMap<Cartpage, GetCartpageModel>();
             CreateMap<Cartpage, CartpageModelCollection>();
+
+            CreateMap<CurrentAffairs, CurrentAffairsModel>().ReverseMap();
+            CreateMap<CurrentAffairs, GetCurrentAffairsModel>();
+            CreateMap<CurrentAffairs, CurrentAffairsModelCollection>();
         }
     }
 }
