@@ -133,48 +133,75 @@ namespace ipog.bureaucrats.Workflow.Services
 
         public async Task<Response> SetActiveStatus(long id)
         {
-            bool success = await _iCurrentAffairsRepository.SetActiveStatus(id);
-            if (success)
+            try
             {
-                return new Response()
+                bool result = await _iCurrentAffairsRepository.SetActiveStatus(id);
+
+                if (result)
                 {
-                    Code = 200,
-                    Success = true,
-                    Message = "CurrentAffairs status updated to active.",
-                };
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Current Affair status updated to active.",
+                        Success = true
+                    };
+                }
+                else
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Current Affairs entry not found",
+                        Success = false
+                    };
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return new Response()
+                return new Response
                 {
-                    Code = 200,
-                    Success = false,
-                    Message = "CurrentAffairs not found.",
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
                 };
             }
         }
 
         public async Task<Response> SetInActiveStatus(long id)
         {
-            bool success = await _iCurrentAffairsRepository.SetInActiveStatus(id);
-            if (success)
+            try
             {
-                return new Response()
+                bool result = await _iCurrentAffairsRepository.SetInActiveStatus(id);
+
+                if (result)
                 {
-                    Code = 200,
-                    Success = true,
-                    Message = "CurrentAffairs status updated to inactive.",
-                };
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Current Affair status updated to inactive",
+                        Success = true
+                    };
+                }
+                else
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Current Affairs entry not found",
+                        Success = false
+                    };
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return new Response()
+                return new Response
                 {
-                    Code = 200,
-                    Success = false,
-                    Message = "CurrentAffairs not found.",
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
                 };
             }
         }
+
     }
 }
