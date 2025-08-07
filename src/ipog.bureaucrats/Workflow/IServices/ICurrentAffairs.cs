@@ -10,7 +10,7 @@ namespace ipog.bureaucrats.Workflow.IServices
         Task<Response> Insert(CurrentAffairsModel currentAffairsModel);
         Task<string> Update(CurrentAffairsModel currentAffairsModel);
         Task<string> Delete(long id);
-        Task<string> SetActiveStatus(long id);
-        Task<string> SetInActiveStatus(long id);
+        Task<Response> SetActiveStatus(long id);
+        Task<Response> SetInActiveStatus(long id);
     }
 }

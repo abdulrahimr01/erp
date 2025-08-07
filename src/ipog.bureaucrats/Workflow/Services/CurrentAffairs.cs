@@ -131,35 +131,49 @@ namespace ipog.bureaucrats.Workflow.Services
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
-            try
+            bool success = await _iCurrentAffairsRepository.SetActiveStatus(id);
+            if (success)
             {
-                bool success = await _iCurrentAffairsRepository.SetActiveStatus(id);
-                if (success)
-                    return "CurrentAffairs status updated to active.";
-                else
-                    return "CurrentAffairs not found.";
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "CurrentAffairs status updated to active.",
+                };
             }
-            catch (Exception ex)
+            else
             {
-                return ex.Message;
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "CurrentAffairs not found.",
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
-            try
+            bool success = await _iCurrentAffairsRepository.SetInActiveStatus(id);
+            if (success)
             {
-                bool success = await _iCurrentAffairsRepository.SetInActiveStatus(id);
-                if (success)
-                    return "CurrentAffairs status updated to inactive.";
-                else
-                    return "CurrentAffairs not found.";
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "CurrentAffairs status updated to inactive.",
+                };
             }
-            catch (Exception ex)
+            else
             {
-                return ex.Message;
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "CurrentAffairs not found.",
+                };
             }
         }
     }
