@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS public.currentaffairs
     isactive boolean NOT NULL,
     actionby character varying(50) COLLATE pg_catalog."default" NOT NULL,
     actiondate timestamp without time zone NOT NULL,
+    title character varying(100) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT currentaffairs_pkey PRIMARY KEY (id)
 )
 

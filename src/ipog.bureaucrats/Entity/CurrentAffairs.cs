@@ -12,5 +12,6 @@ namespace ipog.bureaucrats.Entity
         public bool? IsActive { get; set; }
         public string? ActionBy { get; set; }
         public DateTime ActionDate { get; set; }
+        public string? Title { get; set; }
     }
 }

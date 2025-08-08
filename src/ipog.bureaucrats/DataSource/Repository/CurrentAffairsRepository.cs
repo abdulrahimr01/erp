@@ -77,9 +77,10 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_actionby", currentaffairs.ActionBy },
                     { "p_actiondate", currentaffairs.ActionDate },
                     { "p_isactive", currentaffairs.IsActive },
+                    { "p_title",currentaffairs.Title}
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_currentaffairs(@p_date,@p_catagory, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate)",
+                    "CALL sp_currentaffairs(@p_date,@p_catagory, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate,@p_title)",
                     parameters
                 );
                 return true;
@@ -106,10 +107,11 @@ namespace ipog.bureaucrats.DataSource.IRepository
             { "p_actionby", currentaffairs.ActionBy },
             { "p_actiondate", currentaffairs.ActionDate },
             { "p_isactive", currentaffairs.IsActive },
+            { "p_title",currentaffairs.Title},
             { "p_id", currentaffairs.Id },
         };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                   "CALL sp_currentaffairs(@p_date,@p_catagory, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate,@p_id)",
+                   "CALL sp_currentaffairs(@p_date,@p_catagory, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate,@p_title,@p_id)",
                     parameters
                 );
 
