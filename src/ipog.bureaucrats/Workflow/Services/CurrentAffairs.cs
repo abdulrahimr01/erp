@@ -105,29 +105,56 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(CurrentAffairsModel currentaffairsModel)
+        public async Task<Response> Update(CurrentAffairsModel currentaffairsModel)
         {
             CurrentAffairs currentaffairs = await _mapper.CreateMap<CurrentAffairs, CurrentAffairsModel>(currentaffairsModel);
             bool success = await _iCurrentAffairsRepository.Update(currentaffairs);
             if (success)
-                return "CurrentAffairs updated successfully.";
-            else
-                return "CurrentAffairs update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "CurrentAffairs updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "CurrentAffairs updated failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iCurrentAffairsRepository.Delete(id);
                 if (deleted)
-                    return "CurrentAffairs deleted successfully.";
-                else
-                    return "CurrentAffairs not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "CurrentAffairs deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "CurrentAffairs not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 

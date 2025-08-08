@@ -8,8 +8,8 @@ namespace ipog.bureaucrats.Workflow.IServices
         Task<CollectionResponse<CurrentAffairsModelCollection>> GetAll();
         Task<CurrentAffairsModelCollection> GetFilter(PaginationModel paginationModel);
         Task<Response> Insert(CurrentAffairsModel currentAffairsModel);
-        Task<string> Update(CurrentAffairsModel currentAffairsModel);
-        Task<string> Delete(long id);
+        Task<Response> Update(CurrentAffairsModel currentAffairsModel);
+        Task<Response> Delete(long id);
         Task<Response> SetActiveStatus(long id);
         Task<Response> SetInActiveStatus(long id);
     }

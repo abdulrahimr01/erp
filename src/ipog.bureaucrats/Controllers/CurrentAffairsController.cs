@@ -49,15 +49,15 @@ namespace ipog.bureaucrats.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] CurrentAffairsModel currentaffairsModel)
         {
-            string message = await _iCurrentAffairsService.Update(currentaffairsModel);
-            return Ok(message);
+            Response response = await _iCurrentAffairsService.Update(currentaffairsModel);
+            return Ok(response);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(long id)
         {
-            string message = await _iCurrentAffairsService.Delete(id);
-            return Ok(message);
+            Response response = await _iCurrentAffairsService.Delete(id);
+            return Ok(response);
         }
 
         [HttpPatch("active")]
