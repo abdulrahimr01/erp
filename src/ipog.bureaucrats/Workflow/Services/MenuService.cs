@@ -105,61 +105,126 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(MenuModel menuModel)
+        public async Task<Response> Update(MenuModel menuModel)
         {
             Menu menu = await _mapper.CreateMap<Menu, MenuModel>(menuModel);
             bool success = await _iMenuRepository.Update(menu);
             if (success)
-                return "Menu updated successfully.";
-            else
-                return "Menu update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Menu updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "Menu update failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iMenuRepository.Delete(id);
                 if (deleted)
-                    return "Menu deleted successfully.";
-                else
-                    return "Menu not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "Menu deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "Menu not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iMenuRepository.SetActiveStatus(id);
                 if (success)
-                    return "Menu status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Menu status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "Menu not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Menu entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iMenuRepository.SetInActiveStatus(id);
                 if (success)
-                    return "Menu status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Menu status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "Menu not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Menu entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }

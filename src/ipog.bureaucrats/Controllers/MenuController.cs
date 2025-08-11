@@ -49,29 +49,29 @@ namespace ipog.bureaucrats.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] MenuModel menuModel)
         {
-            string message = await _iMenuService.Update(menuModel);
-            return Ok(message);
+            Response response = await _iMenuService.Update(menuModel);
+            return Ok(response);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(long id)
         {
-            string message = await _iMenuService.Delete(id);
-            return Ok(message);
+            Response response = await _iMenuService.Delete(id);
+            return Ok(response);
         }
 
         [HttpPatch("active")]
         public async Task<IActionResult> SetActiveStatus(long id)
         {
-            string message = await _iMenuService.SetActiveStatus(id);
-            return Ok(message);
+            Response response = await _iMenuService.SetActiveStatus(id);
+            return Ok(response);
         }
 
         [HttpPatch("inactive")]
         public async Task<IActionResult> SetInActiveStatus(long id)
         {
-            string message = await _iMenuService.SetInActiveStatus(id);
-            return Ok(message);
+            Response response = await _iMenuService.SetInActiveStatus(id);
+            return Ok(response);
         }
     }
 }
