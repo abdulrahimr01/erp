@@ -69,7 +69,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
                 {
                     { "p_date",editorials.Date},
-                    { "p_catagory", editorials.Catagory },
+                    { "p_category", editorials.Category },
                     { "p_title",editorials.Title},
                     { "p_slug", editorials.Slug },
                     { "p_content", editorials.Content},
@@ -80,7 +80,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_isactive", editorials.IsActive }
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_editorials(@p_date,@p_catagory,@p_title, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate)",
+                    "CALL sp_editorials(@p_date,@p_category,@p_title, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
@@ -99,7 +99,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
         {
             { "p_date",editorials.Date},
-            { "p_catagory", editorials.Catagory },
+            { "p_category", editorials.Category },
             { "p_title",editorials.Title},
             { "p_slug", editorials.Slug },
             { "p_content", editorials.Content},
@@ -111,7 +111,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
             { "p_id", editorials.Id },
         };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                   "CALL sp_editorials(@p_date,@p_catagory, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate,@p_title,@p_id)",
+                   "CALL sp_editorials(@p_date,@p_category,@p_title, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate,@p_id)",
                     parameters
                 );
 

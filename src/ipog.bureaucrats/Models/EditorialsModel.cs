@@ -4,7 +4,7 @@ namespace ipog.bureaucrats.Models
     {
         public long Id { get; set; }
         public DateTime Date { get; set; }
-        public string? Catagory { get; set; }
+        public string? Category { get; set; }
         public string? Title { get; set; }
         public string? Slug { get; set; }
         public string? Content { get; set; }

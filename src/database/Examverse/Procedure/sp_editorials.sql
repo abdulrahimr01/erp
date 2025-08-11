@@ -4,7 +4,7 @@
 
 CREATE OR REPLACE PROCEDURE public.sp_editorials(
 	IN p_date timestamp without time zone,
-	IN p_catagory character varying,
+	IN p_category character varying,
 	IN p_title character varying,
 	IN p_slug character varying,
 	IN p_content character varying,
@@ -20,14 +20,14 @@ BEGIN
 
 --insert
 IF p_id=0 THEN
-INSERT INTO editorials(date,catagory,title,slug,content,created_at,updated_at,isactive,actionby,actiondate)
-VALUES(p_date,p_catagory,p_title,p_slug,p_content,p_created_at,p_updated_at,p_isactive,p_actionby,p_actiondate);
+INSERT INTO editorials(date,category,title,slug,content,created_at,updated_at,isactive,actionby,actiondate)
+VALUES(p_date,p_category,p_title,p_slug,p_content,p_created_at,p_updated_at,p_isactive,p_actionby,p_actiondate);
 END IF;
 
 --update
 IF p_id>0 AND EXISTS (SELECT 1 FROM editorials WHERE id=p_id) THEN
 UPDATE editorials
-SET date=p_date,catagory=p_catagory,title=p_title,slug=p_slug,content=p_content,created_at=p_created_at,updated_at=p_updated_at,isactive=p_isactive,actionby=p_actionby,actiondate=p_actiondate
+SET date=p_date,category=p_category,title=p_title,slug=p_slug,content=p_content,created_at=p_created_at,updated_at=p_updated_at,isactive=p_isactive,actionby=p_actionby,actiondate=p_actiondate
 WHERE id=p_id;
 END IF;
 

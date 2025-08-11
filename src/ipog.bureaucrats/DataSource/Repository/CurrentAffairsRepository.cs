@@ -69,7 +69,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
                 {
                     { "p_date",currentaffairs.Date},
-                    { "p_catagory", currentaffairs.Catagory },
+                    { "p_category", currentaffairs.Category },
                     { "p_slug", currentaffairs.Slug },
                     { "p_content", currentaffairs.Content},
                     { "p_created_at",currentaffairs.Created_at},
@@ -80,7 +80,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_title",currentaffairs.Title}
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_currentaffairs(@p_date,@p_catagory, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate,@p_title)",
+                    "CALL sp_currentaffairs(@p_date,@p_category, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate,@p_title)",
                     parameters
                 );
                 return true;
@@ -99,7 +99,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
         {
             { "p_date",currentaffairs.Date},
-            { "p_catagory", currentaffairs.Catagory },
+            { "p_category", currentaffairs.Category },
             { "p_slug", currentaffairs.Slug },
             { "p_content", currentaffairs.Content},
             { "p_created_at",currentaffairs.Created_at},
@@ -111,7 +111,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
             { "p_id", currentaffairs.Id },
         };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                   "CALL sp_currentaffairs(@p_date,@p_catagory, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate,@p_title,@p_id)",
+                   "CALL sp_currentaffairs(@p_date,@p_category, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate,@p_title,@p_id)",
                     parameters
                 );
 

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS public.currentaffairs
 (
     id bigint NOT NULL DEFAULT nextval('currentaffairs_id_seq'::regclass),
     date timestamp without time zone NOT NULL,
-    catagory character varying COLLATE pg_catalog."default" NOT NULL,
+    category character varying COLLATE pg_catalog."default" NOT NULL,
     slug character varying COLLATE pg_catalog."default" NOT NULL,
     content character varying COLLATE pg_catalog."default" NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
