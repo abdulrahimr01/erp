@@ -49,15 +49,15 @@ namespace ipog.bureaucrats.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] DefaultPageModel defaultPageModel)
         {
-            string message = await _iDefaultPageService.Update(defaultPageModel);
-            return Ok(message);
+            Response response = await _iDefaultPageService.Update(defaultPageModel);
+            return Ok(response);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(long id)
         {
-            string message = await _iDefaultPageService.Delete(id);
-            return Ok(message);
+            Response response = await _iDefaultPageService.Delete(id);
+            return Ok(response);
         }
 
         [HttpPatch("active")]
