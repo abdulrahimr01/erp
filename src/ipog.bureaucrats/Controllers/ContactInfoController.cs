@@ -49,15 +49,15 @@ namespace ipog.bureaucrats.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] ContactInfoModel contactinfoModel)
         {
-            string message = await _iContactInfoService.Update(contactinfoModel);
-            return Ok(message);
+            Response response = await _iContactInfoService.Update(contactinfoModel);
+            return Ok(response);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(long id)
         {
-            string message = await _iContactInfoService.Delete(id);
-            return Ok(message);
+            Response response = await _iContactInfoService.Delete(id);
+            return Ok(response);
         }
 
         [HttpPatch("active")]
