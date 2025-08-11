@@ -105,61 +105,126 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(RoleModel roleModel)
+        public async Task<Response> Update(RoleModel roleModel)
         {
             Role role = await _mapper.CreateMap<Role, RoleModel>(roleModel);
             bool success = await _iRoleRepository.Update(role);
             if (success)
-                return "Role updated successfully.";
-            else
-                return "Role update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Role updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "Role update failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iRoleRepository.Delete(id);
                 if (deleted)
-                    return "Role deleted successfully.";
-                else
-                    return "Role not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "Role deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "Role not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iRoleRepository.SetActiveStatus(id);
                 if (success)
-                    return "Role status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Role status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "Role not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Role entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iRoleRepository.SetInActiveStatus(id);
                 if (success)
-                    return "Role status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Role status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "Role not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Role entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }
