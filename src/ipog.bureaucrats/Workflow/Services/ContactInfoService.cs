@@ -158,35 +158,73 @@ namespace ipog.bureaucrats.Workflow.Services
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iContactInfoRepository.SetActiveStatus(id);
                 if (success)
-                    return "ContactInfo status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "ContactInfo status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "ContactInfo not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "ContactInfo entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iContactInfoRepository.SetInActiveStatus(id);
                 if (success)
-                    return "ContactInfo status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "ContactInfo status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "ContactInfo not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "ContactInfo entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }

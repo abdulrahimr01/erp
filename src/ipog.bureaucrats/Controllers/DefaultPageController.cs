@@ -63,15 +63,15 @@ namespace ipog.bureaucrats.Controllers
         [HttpPatch("active")]
         public async Task<IActionResult> SetActiveStatus(long id)
         {
-            string message = await _iDefaultPageService.SetActiveStatus(id);
-            return Ok(message);
+            Response response = await _iDefaultPageService.SetActiveStatus(id);
+            return Ok(response);
         }
 
         [HttpPatch("inactive")]
         public async Task<IActionResult> SetInActiveStatus(long id)
         {
-            string message = await _iDefaultPageService.SetInActiveStatus(id);
-            return Ok(message);
+            Response response = await _iDefaultPageService.SetInActiveStatus(id);
+            return Ok(response);
         }
     }
 }
