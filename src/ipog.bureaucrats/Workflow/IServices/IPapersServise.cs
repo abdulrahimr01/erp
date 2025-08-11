@@ -8,9 +8,9 @@ namespace ipog.bureaucrats.Workflow.IServices
         Task<CollectionResponse<PapersModelCollection>> GetAll();
         Task<PapersModelCollection> GetFilter(PaginationModel paginationModel);
         Task<Response> Insert(PapersModel papersModel);
-        Task<string> Update(PapersModel papersModel);
-        Task<string> Delete(long id);
-        Task<string> SetActiveStatus(long id);
-        Task<string> SetInActiveStatus(long id);
+        Task<Response> Update(PapersModel papersModel);
+        Task<Response> Delete(long id);
+        Task<Response> SetActiveStatus(long id);
+        Task<Response> SetInActiveStatus(long id);
     }
 }

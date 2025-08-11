@@ -111,63 +111,128 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(TnpscaboutModel tnpscaboutModel)
+        public async Task<Response> Update(TnpscaboutModel tnpscaboutModel)
         {
             Tnpscabout tnpscabout = await _mapper.CreateMap<Tnpscabout, TnpscaboutModel>(
                 tnpscaboutModel
             );
             bool success = await _iTnpscaboutRepository.Update(tnpscabout);
             if (success)
-                return "Tnpscabout updated successfully.";
-            else
-                return "Tnpscabout update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Tnpscabout updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "Tnpscabout update failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iTnpscaboutRepository.Delete(id);
                 if (deleted)
-                    return "Tnpscabout deleted successfully.";
-                else
-                    return "Tnpscabout not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "Tnpscabout deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "Tnpscabout not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iTnpscaboutRepository.SetActiveStatus(id);
                 if (success)
-                    return "Tnpscabout status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Tnpscabout status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "Tnpscabout not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Tnpscabout entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iTnpscaboutRepository.SetInActiveStatus(id);
                 if (success)
-                    return "Tnpscabout status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Tnpscabout status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "Tnpscabout not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Tnpscabout entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }

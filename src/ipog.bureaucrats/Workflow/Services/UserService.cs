@@ -163,61 +163,126 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(UserModel userModel)
+        public async Task<Response> Update(UserModel userModel)
         {
             User user = await _mapper.CreateMap<User, UserModel>(userModel);
             bool success = await _iUserRepository.Update(user);
             if (success)
-                return "User updated successfully.";
-            else
-                return "User update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "User updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "User updated failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iUserRepository.Delete(id);
                 if (deleted)
-                    return "User deleted successfully.";
-                else
-                    return "User not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "User deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "User not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iUserRepository.SetActiveStatus(id);
                 if (success)
-                    return "User status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "User status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "User not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "User entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iUserRepository.SetInActiveStatus(id);
                 if (success)
-                    return "User status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "User status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "User not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "User entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }

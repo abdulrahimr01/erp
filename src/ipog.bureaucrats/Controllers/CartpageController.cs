@@ -50,29 +50,29 @@ namespace ipog.bureaucrats.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] CartpageModel cartpageModel)
         {
-            string message = await _iCartpageService.Update(cartpageModel);
-            return Ok(message);
+            Response response = await _iCartpageService.Update(cartpageModel);
+            return Ok(response);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(long id)
         {
-            string message = await _iCartpageService.Delete(id);
-            return Ok(message);
+            Response response = await _iCartpageService.Delete(id);
+            return Ok(response);
         }
 
         [HttpPatch("active")]
         public async Task<IActionResult> SetActiveStatus(long id)
         {
-            string message = await _iCartpageService.SetActiveStatus(id);
-            return Ok(message);
+            Response response = await _iCartpageService.SetActiveStatus(id);
+            return Ok(response);
         }
 
         [HttpPatch("inactive")]
         public async Task<IActionResult> SetInActiveStatus(long id)
         {
-            string message = await _iCartpageService.SetInActiveStatus(id);
-            return Ok(message);
+            Response response = await _iCartpageService.SetInActiveStatus(id);
+            return Ok(response);
         }
     }
 }

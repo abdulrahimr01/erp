@@ -111,63 +111,128 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(HomeaboutModel homeaboutModel)
+        public async Task<Response> Update(HomeaboutModel homeaboutModel)
         {
             Homeabout homeabout = await _mapper.CreateMap<Homeabout, HomeaboutModel>(
                 homeaboutModel
             );
             bool success = await _iHomeaboutRepository.Update(homeabout);
             if (success)
-                return "Homeabout updated successfully.";
-            else
-                return "Homeabout update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Homeabout updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "Homeabout updated failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iHomeaboutRepository.Delete(id);
                 if (deleted)
-                    return "Homeabout deleted successfully.";
-                else
-                    return "Homeabout not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "Homeabout deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "Homeabout not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iHomeaboutRepository.SetActiveStatus(id);
                 if (success)
-                    return "Homeabout status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Homeabout status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "Homeabout not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Homeabout entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iHomeaboutRepository.SetInActiveStatus(id);
                 if (success)
-                    return "Homeabout status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Homeabout status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "Homeabout not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Homeabout entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }

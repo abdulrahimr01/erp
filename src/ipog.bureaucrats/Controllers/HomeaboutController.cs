@@ -52,29 +52,29 @@ namespace ipog.bureaucrats.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] HomeaboutModel homeaboutModel)
         {
-            string message = await _iHomeaboutService.Update(homeaboutModel);
-            return Ok(message);
+            Response response = await _iHomeaboutService.Update(homeaboutModel);
+            return Ok(response);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(long id)
         {
-            string message = await _iHomeaboutService.Delete(id);
-            return Ok(message);
+            Response response = await _iHomeaboutService.Delete(id);
+            return Ok(response);
         }
 
         [HttpPatch("active")]
         public async Task<IActionResult> SetActiveStatus(long id)
         {
-            string message = await _iHomeaboutService.SetActiveStatus(id);
-            return Ok(message);
+            Response response = await _iHomeaboutService.SetActiveStatus(id);
+            return Ok(response);
         }
 
         [HttpPatch("inactive")]
         public async Task<IActionResult> SetInActiveStatus(long id)
         {
-            string message = await _iHomeaboutService.SetInActiveStatus(id);
-            return Ok(message);
+            Response response = await _iHomeaboutService.SetInActiveStatus(id);
+            return Ok(response);
         }
     }
 }

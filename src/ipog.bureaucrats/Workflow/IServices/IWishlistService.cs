@@ -8,9 +8,9 @@ namespace ipog.bureaucrats.Workflow.IServices
         Task<CollectionResponse<WishlistModelCollection>> GetAll();
         Task<WishlistModelCollection> GetFilter(PaginationModel paginationModel);
         Task<Response> Insert(WishlistModel wishlistModel);
-        Task<string> Update(WishlistModel wishlistModel);
-        Task<string> Delete(long id);
-        Task<string> SetActiveStatus(long id);
-        Task<string> SetInActiveStatus(long id);
+        Task<Response> Update(WishlistModel wishlistModel);
+        Task<Response> Delete(long id);
+        Task<Response> SetActiveStatus(long id);
+        Task<Response> SetInActiveStatus(long id);
     }
 }

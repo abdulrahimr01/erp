@@ -105,61 +105,126 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(BooksModel booksModel)
+        public async Task<Response> Update(BooksModel booksModel)
         {
             Books books = await _mapper.CreateMap<Books, BooksModel>(booksModel);
             bool success = await _iBooksRepository.Update(books);
             if (success)
-                return "Books updated successfully.";
-            else
-                return "Books update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Books updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "Books updated failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iBooksRepository.Delete(id);
                 if (deleted)
-                    return "Books deleted successfully.";
-                else
-                    return "Books not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "Books deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "Books not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iBooksRepository.SetActiveStatus(id);
                 if (success)
-                    return "Books status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Books status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "Books not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Books entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iBooksRepository.SetInActiveStatus(id);
                 if (success)
-                    return "Books status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Books status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "Books not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Books entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }

@@ -105,61 +105,126 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(ExamsModel examsModel)
+        public async Task<Response> Update(ExamsModel examsModel)
         {
             Exams exams = await _mapper.CreateMap<Exams, ExamsModel>(examsModel);
             bool success = await _iExamsRepository.Update(exams);
             if (success)
-                return "Exams updated successfully.";
-            else
-                return "Exams update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Exams updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "Exams updated failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iExamsRepository.Delete(id);
                 if (deleted)
-                    return "Exams deleted successfully.";
-                else
-                    return "Exams not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "Exams deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "Exams not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iExamsRepository.SetActiveStatus(id);
                 if (success)
-                    return "Exams status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Exams status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "Exams not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Exams entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iExamsRepository.SetInActiveStatus(id);
                 if (success)
-                    return "Exams status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Exams status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "Exams not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Exams entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }

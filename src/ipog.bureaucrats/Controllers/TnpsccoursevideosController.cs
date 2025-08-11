@@ -56,29 +56,29 @@ namespace ipog.bureaucrats.Controllers
             [FromBody] TnpsccoursevideosModel tnpsccoursevideosModel
         )
         {
-            string message = await _iTnpsccoursevideosService.Update(tnpsccoursevideosModel);
-            return Ok(message);
+            Response response = await _iTnpsccoursevideosService.Update(tnpsccoursevideosModel);
+            return Ok(response);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(long id)
         {
-            string message = await _iTnpsccoursevideosService.Delete(id);
-            return Ok(message);
+            Response response = await _iTnpsccoursevideosService.Delete(id);
+            return Ok(response);
         }
 
         [HttpPatch("active")]
         public async Task<IActionResult> SetActiveStatus(long id)
         {
-            string message = await _iTnpsccoursevideosService.SetActiveStatus(id);
-            return Ok(message);
+            Response response = await _iTnpsccoursevideosService.SetActiveStatus(id);
+            return Ok(response);
         }
 
         [HttpPatch("inactive")]
         public async Task<IActionResult> SetInActiveStatus(long id)
         {
-            string message = await _iTnpsccoursevideosService.SetInActiveStatus(id);
-            return Ok(message);
+            Response response = await _iTnpsccoursevideosService.SetInActiveStatus(id);
+            return Ok(response);
         }
     }
 }

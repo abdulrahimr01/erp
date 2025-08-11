@@ -109,61 +109,126 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(WishlistModel wishlistModel)
+        public async Task<Response> Update(WishlistModel wishlistModel)
         {
             Wishlist wishlist = await _mapper.CreateMap<Wishlist, WishlistModel>(wishlistModel);
             bool success = await _iWishlistRepository.Update(wishlist);
             if (success)
-                return "Wishlist updated successfully.";
-            else
-                return "Wishlist update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Wishlist updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "Wishlist updated failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iWishlistRepository.Delete(id);
                 if (deleted)
-                    return "Wishlist deleted successfully.";
-                else
-                    return "Wishlist not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "Wishlist deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "Wishlist not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iWishlistRepository.SetActiveStatus(id);
                 if (success)
-                    return "Wishlist status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Wishlist status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "Wishlist not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Wishlist entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iWishlistRepository.SetInActiveStatus(id);
                 if (success)
-                    return "Wishlist status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Wishlist status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "Wishlist not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Wishlist entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }

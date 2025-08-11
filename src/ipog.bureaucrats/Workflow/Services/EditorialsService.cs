@@ -169,7 +169,7 @@ namespace ipog.bureaucrats.Workflow.Services
                     return new Response
                     {
                         Code = 200,
-                        Message = "Current Affair status updated to active.",
+                        Message = "Editorials status updated to active.",
                         Success = true
                     };
                 }
@@ -178,7 +178,7 @@ namespace ipog.bureaucrats.Workflow.Services
                     return new Response
                     {
                         Code = 404,
-                        Message = "Current Affairs entry not found",
+                        Message = "Editorials entry not found",
                         Success = false
                     };
                 }
@@ -205,7 +205,7 @@ namespace ipog.bureaucrats.Workflow.Services
                     return new Response
                     {
                         Code = 200,
-                        Message = "Current Affair status updated to inactive",
+                        Message = "Editorials status updated to inactive",
                         Success = true
                     };
                 }
@@ -214,7 +214,7 @@ namespace ipog.bureaucrats.Workflow.Services
                     return new Response
                     {
                         Code = 404,
-                        Message = "Current Affairs entry not found",
+                        Message = "Editorials entry not found",
                         Success = false
                     };
                 }

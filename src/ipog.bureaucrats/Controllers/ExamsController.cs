@@ -49,29 +49,29 @@ namespace ipog.bureaucrats.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] ExamsModel examsModel)
         {
-            string message = await _iExamsService.Update(examsModel);
-            return Ok(message);
+            Response response = await _iExamsService.Update(examsModel);
+            return Ok(response);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(long id)
         {
-            string message = await _iExamsService.Delete(id);
-            return Ok(message);
+            Response response = await _iExamsService.Delete(id);
+            return Ok(response);
         }
 
         [HttpPatch("active")]
         public async Task<IActionResult> SetActiveStatus(long id)
         {
-            string message = await _iExamsService.SetActiveStatus(id);
-            return Ok(message);
+            Response response = await _iExamsService.SetActiveStatus(id);
+            return Ok(response);
         }
 
         [HttpPatch("inactive")]
         public async Task<IActionResult> SetInActiveStatus(long id)
         {
-            string message = await _iExamsService.SetInActiveStatus(id);
-            return Ok(message);
+            Response response = await _iExamsService.SetInActiveStatus(id);
+            return Ok(response);
         }
     }
 }

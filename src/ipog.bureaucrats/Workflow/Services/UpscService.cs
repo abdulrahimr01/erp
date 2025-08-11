@@ -111,63 +111,128 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(UpscaboutModel upscaboutModel)
+        public async Task<Response> Update(UpscaboutModel upscaboutModel)
         {
             Upscabout upscabout = await _mapper.CreateMap<Upscabout, UpscaboutModel>(
                 upscaboutModel
             );
             bool success = await _iUpscaboutRepository.Update(upscabout);
             if (success)
-                return "Upscabout updated successfully.";
-            else
-                return "Upscabout update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Upscabout updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "Upscabout updated failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iUpscaboutRepository.Delete(id);
                 if (deleted)
-                    return "Upscabout deleted successfully.";
-                else
-                    return "Upscabout not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "Upscabout deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "Upscabout not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iUpscaboutRepository.SetActiveStatus(id);
                 if (success)
-                    return "Upscabout status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Upscabout status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "Upscabout not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Upscabout entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iUpscaboutRepository.SetInActiveStatus(id);
                 if (success)
-                    return "Upscabout status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Upscabout status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "Upscabout not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Upscabout entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }

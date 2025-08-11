@@ -8,9 +8,9 @@ namespace ipog.bureaucrats.Workflow.IServices
         Task<CollectionResponse<UpscaboutModelCollection>> GetAll();
         Task<UpscaboutModelCollection> GetFilter(PaginationModel paginationModel);
         Task<Response> Insert(UpscaboutModel upscaboutModel);
-        Task<string> Update(UpscaboutModel upscaboutModel);
-        Task<string> Delete(long id);
-        Task<string> SetActiveStatus(long id);
-        Task<string> SetInActiveStatus(long id);
+        Task<Response> Update(UpscaboutModel upscaboutModel);
+        Task<Response> Delete(long id);
+        Task<Response> SetActiveStatus(long id);
+        Task<Response> SetInActiveStatus(long id);
     }
 }

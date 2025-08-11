@@ -117,7 +117,7 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(TnpsccoursevideosModel tnpsccoursevideosModel)
+        public async Task<Response> Update(TnpsccoursevideosModel tnpsccoursevideosModel)
         {
             Tnpsccoursevideos tnpsccoursevideos = await _mapper.CreateMap<
                 Tnpsccoursevideos,
@@ -125,56 +125,121 @@ namespace ipog.bureaucrats.Workflow.Services
             >(tnpsccoursevideosModel);
             bool success = await _iTnpsccoursevideosRepository.Update(tnpsccoursevideos);
             if (success)
-                return "Tnpsccoursevideos updated successfully.";
-            else
-                return "Tnpsccoursevideos update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Tnpsccoursevideos updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "Tnpsccoursevideos update failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iTnpsccoursevideosRepository.Delete(id);
                 if (deleted)
-                    return "Tnpsccoursevideos deleted successfully.";
-                else
-                    return "Tnpsccoursevideos not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "Tnpsccoursevideos deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "Tnpsccoursevideos not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iTnpsccoursevideosRepository.SetActiveStatus(id);
                 if (success)
-                    return "Tnpsccoursevideos status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Tnpsccoursevideos status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "Tnpsccoursevideos not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Tnpsccoursevideos entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iTnpsccoursevideosRepository.SetInActiveStatus(id);
                 if (success)
-                    return "Tnpsccoursevideos status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Tnpsccoursevideos status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "Tnpsccoursevideos not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Tnpsccoursevideos entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }

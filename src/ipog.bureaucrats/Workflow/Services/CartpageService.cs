@@ -109,61 +109,126 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(CartpageModel cartpageModel)
+        public async Task<Response> Update(CartpageModel cartpageModel)
         {
             Cartpage cartpage = await _mapper.CreateMap<Cartpage, CartpageModel>(cartpageModel);
             bool success = await _iCartpageRepository.Update(cartpage);
             if (success)
-                return "Cartpage updated successfully.";
-            else
-                return "Cartpage update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Cartpage updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "Cartpage updated failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iCartpageRepository.Delete(id);
                 if (deleted)
-                    return "Cartpage deleted successfully.";
-                else
-                    return "Cartpage not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "Cartpage deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "Cartpage not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iCartpageRepository.SetActiveStatus(id);
                 if (success)
-                    return "Cartpage status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Cartpage status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "Cartpage not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Cartpage entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iCartpageRepository.SetInActiveStatus(id);
                 if (success)
-                    return "Cartpage status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Cartpage status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "Cartpage not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Cartpage entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }

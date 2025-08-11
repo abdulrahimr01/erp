@@ -10,9 +10,9 @@ namespace ipog.bureaucrats.Workflow.IServices
         Task<GetResponse<GetUserModel>> UserLogin(UserLoginModel request);
         Task<GetResponse<GetUserModel>> UpdatePassword(UpdatePasswordModel requestModel);
         Task<Response> Insert(UserModel userModel);
-        Task<string> Update(UserModel userModel);
-        Task<string> Delete(long id);
-        Task<string> SetActiveStatus(long id);
-        Task<string> SetInActiveStatus(long id);
+        Task<Response> Update(UserModel userModel);
+        Task<Response> Delete(long id);
+        Task<Response> SetActiveStatus(long id);
+        Task<Response> SetInActiveStatus(long id);
     }
 }

@@ -112,63 +112,128 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(CoursevideosModel coursevideosModel)
+        public async Task<Response> Update(CoursevideosModel coursevideosModel)
         {
             Coursevideos coursevideos = await _mapper.CreateMap<Coursevideos, CoursevideosModel>(
                 coursevideosModel
             );
             bool success = await _iCoursevideosRepository.Update(coursevideos);
             if (success)
-                return "Coursevideos updated successfully.";
-            else
-                return "Coursevideos update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Coursevideos updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "Coursevideos updated failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iCoursevideosRepository.Delete(id);
                 if (deleted)
-                    return "Coursevideos deleted successfully.";
-                else
-                    return "Coursevideos not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "Coursevideos deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "Coursevideos not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iCoursevideosRepository.SetActiveStatus(id);
                 if (success)
-                    return "Coursevideos status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Coursevideos status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "Coursevideos not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Coursevideos entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iCoursevideosRepository.SetInActiveStatus(id);
                 if (success)
-                    return "Coursevideos status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Coursevideos status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "Coursevideos not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Coursevideos entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }

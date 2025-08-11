@@ -96,72 +96,137 @@ namespace ipog.bureaucrats.Workflow.Services
                 {
                     Code = 200,
                     Success = true,
-                    Message = "Papers inserted successfully.",
+                    Message = "Paper inserted successfully.",
                 };
             }
             return new Response()
             {
                 Code = 200,
                 Success = false,
-                Message = "Papers inserted failed.",
+                Message = "Paper inserted failed.",
             };
         }
 
-        public async Task<string> Update(PapersModel papersModel)
+        public async Task<Response> Update(PapersModel papersModel)
         {
             Papers papers = await _mapper.CreateMap<Papers, PapersModel>(papersModel);
             bool success = await _iPapersRepository.Update(papers);
             if (success)
-                return "Papers updated successfully.";
-            else
-                return "Papers update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "Paper updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "Paper update failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iPapersRepository.Delete(id);
                 if (deleted)
-                    return "Papers deleted successfully.";
-                else
-                    return "Papers not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "Paper deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "Paper not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetActiveStatus(long id)
+        public async Task<Response> SetActiveStatus(long id)
         {
             try
             {
                 bool success = await _iPapersRepository.SetActiveStatus(id);
                 if (success)
-                    return "Papers status updated to active.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Paper status updated to active.",
+                        Success = true
+                    };
+                }
                 else
-                    return "Papers not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Paper entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
-        public async Task<string> SetInActiveStatus(long id)
+        public async Task<Response> SetInActiveStatus(long id)
         {
             try
             {
                 bool success = await _iPapersRepository.SetInActiveStatus(id);
                 if (success)
-                    return "Papers status updated to inactive.";
+                {
+                    return new Response
+                    {
+                        Code = 200,
+                        Message = "Paper status updated to inactive",
+                        Success = true
+                    };
+                }
                 else
-                    return "Papers not found.";
+                {
+                    return new Response
+                    {
+                        Code = 404,
+                        Message = "Paper entry not found",
+                        Success = false
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
     }
