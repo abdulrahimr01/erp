@@ -105,29 +105,56 @@ namespace ipog.bureaucrats.Workflow.Services
             };
         }
 
-        public async Task<string> Update(DefaultPageModel defaultPageModel)
+        public async Task<Response> Update(DefaultPageModel defaultPageModel)
         {
             DefaultPage defaultPage = await _mapper.CreateMap<DefaultPage, DefaultPageModel>(defaultPageModel);
             bool success = await _iDefaultPageRepository.Update(defaultPage);
             if (success)
-                return "DefaultPage updated successfully.";
-            else
-                return "DefaultPage update failed.";
+            {
+                return new Response()
+                {
+                    Code = 200,
+                    Success = true,
+                    Message = "DefaultPage updated successfully.",
+                };
+            }
+            return new Response()
+            {
+                Code = 200,
+                Success = false,
+                Message = "DefaultPage update failed.",
+            };
         }
 
-        public async Task<string> Delete(long id)
+        public async Task<Response> Delete(long id)
         {
             try
             {
                 bool deleted = await _iDefaultPageRepository.Delete(id);
                 if (deleted)
-                    return "DefaultPage deleted successfully.";
-                else
-                    return "DefaultPage not found.";
+                {
+                    return new Response()
+                    {
+                        Code = 200,
+                        Success = true,
+                        Message = "DefaultPage deleted successfully.",
+                    };
+                }
+                return new Response()
+                {
+                    Code = 200,
+                    Success = false,
+                    Message = "DefaultPage not found.",
+                };
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new Response
+                {
+                    Code = 500,
+                    Message = ex.Message,
+                    Success = false
+                };
             }
         }
 
