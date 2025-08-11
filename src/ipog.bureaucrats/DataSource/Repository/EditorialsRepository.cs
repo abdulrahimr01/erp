@@ -2,12 +2,12 @@ using ipog.bureaucrats.Entity;
 
 namespace ipog.bureaucrats.DataSource.IRepository
 {
-    public class CurrentAffairsRepository : ICurrentAffairsRepository
+    public class EditorialsRepository : IEditorialsRepository
     {
-        private readonly ILogger<ICurrentAffairsRepository> _logger;
+        private readonly ILogger<IEditorialsRepository> _logger;
         private readonly INpgsqlQuery _inpgsqlQuery;
 
-        public CurrentAffairsRepository(ILogger<ICurrentAffairsRepository> logger, INpgsqlQuery inpgsqlQuery)
+        public EditorialsRepository(ILogger<IEditorialsRepository> logger, INpgsqlQuery inpgsqlQuery)
         {
             _logger = logger;
             _inpgsqlQuery = inpgsqlQuery;
@@ -23,7 +23,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", id },
                 };
                 List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                    "SELECT * FROM fn_currentaffairsget(@p_action, @p_id)",
+                    "SELECT * FROM fn_editorialsget(@p_action, @p_id)",
                     parameters
                 );
                 return result;
@@ -38,7 +38,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
         {
             Dictionary<string, object> parameters = new() { { "p_action", "GETALL" } };
             List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                "SELECT * FROM fn_currentaffairsget(@p_action)",
+                "SELECT * FROM fn_editorialsget(@p_action)",
                 parameters
             );
             return result;
@@ -56,62 +56,62 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 { "p_orderdir", pagination.OrderDir ?? "ASC" },
             };
             List<Dictionary<string, object>> result = await _inpgsqlQuery.ExecuteReaderAsync(
-                "SELECT * FROM fn_currentaffairsget(@p_action, @p_id, @p_skip, @p_take, @p_ordercol, @p_orderdir)",
+                "SELECT * FROM fn_editorialsget(@p_action, @p_id, @p_skip, @p_take, @p_ordercol, @p_orderdir)",
                 parameters
             );
             return result;
         }
 
-        public async Task<bool> Insert(CurrentAffairs currentaffairs)
+        public async Task<bool> Insert(Editorials editorials)
         {
             try
             {
                 Dictionary<string, object> parameters = new()
                 {
-                    { "p_date",currentaffairs.Date},
-                    { "p_category", currentaffairs.Category },
-                    { "p_slug", currentaffairs.Slug },
-                    { "p_content", currentaffairs.Content},
-                    { "p_created_at",currentaffairs.Created_at},
-                    { "p_updated_at",currentaffairs.Updated_at},
-                    { "p_actionby", currentaffairs.ActionBy },
-                    { "p_actiondate", currentaffairs.ActionDate },
-                    { "p_isactive", currentaffairs.IsActive },
-                    { "p_title",currentaffairs.Title}
+                    { "p_date",editorials.Date},
+                    { "p_category", editorials.Category },
+                    { "p_title",editorials.Title},
+                    { "p_slug", editorials.Slug },
+                    { "p_content", editorials.Content},
+                    { "p_created_at",editorials.Created_at},
+                    { "p_updated_at",editorials.Updated_at},
+                    { "p_actionby", editorials.ActionBy },
+                    { "p_actiondate", editorials.ActionDate },
+                    { "p_isactive", editorials.IsActive }
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_currentaffairs(@p_date,@p_category, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate,@p_title)",
+                    "CALL sp_editorials(@p_date,@p_category,@p_title, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate)",
                     parameters
                 );
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "CurrentAffairs insert failed.");
+                _logger.LogError(ex, "Editorials insert failed.");
                 return false;
             }
         }
 
-        public async Task<bool> Update(CurrentAffairs currentaffairs)
+        public async Task<bool> Update(Editorials editorials)
         {
             try
             {
                 Dictionary<string, object> parameters = new()
         {
-            { "p_date",currentaffairs.Date},
-            { "p_category", currentaffairs.Category },
-            { "p_slug", currentaffairs.Slug },
-            { "p_content", currentaffairs.Content},
-            { "p_created_at",currentaffairs.Created_at},
-            { "p_updated_at",currentaffairs.Updated_at},
-            { "p_actionby", currentaffairs.ActionBy },
-            { "p_actiondate", currentaffairs.ActionDate },
-            { "p_isactive", currentaffairs.IsActive },
-            { "p_title",currentaffairs.Title},
-            { "p_id", currentaffairs.Id },
+            { "p_date",editorials.Date},
+            { "p_category", editorials.Category },
+            { "p_title",editorials.Title},
+            { "p_slug", editorials.Slug },
+            { "p_content", editorials.Content},
+            { "p_created_at",editorials.Created_at},
+            { "p_updated_at",editorials.Updated_at},
+            { "p_actionby", editorials.ActionBy },
+            { "p_actiondate", editorials.ActionDate },
+            { "p_isactive", editorials.IsActive },
+            { "p_id", editorials.Id },
         };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                   "CALL sp_currentaffairs(@p_date,@p_category, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate,@p_title,@p_id)",
+                   "CALL sp_editorials(@p_date,@p_category,@p_title, @p_slug, @p_content,@p_created_at,@p_updated_at, @p_isactive, @p_actionby, @p_actiondate,@p_id)",
                     parameters
                 );
 
@@ -119,7 +119,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error calling sp_currentaffairs: {ex.Message}");
+                _logger.LogError($"Error calling sp_editorials: {ex.Message}");
                 return false;
             }
         }
@@ -135,14 +135,14 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", id },
                 };
                 bool success = await _inpgsqlQuery.ExecuteScalarAsync(
-                    "SELECT fn_currentaffairsbyid(@p_action, @p_id)",
+                    "SELECT fn_editorialsbyid(@p_action, @p_id)",
                     parameters
                 );
                 return success;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting CurrentAffairs");
+                _logger.LogError(ex, "Error deleting Editorials");
                 throw;
             }
         }
@@ -157,14 +157,14 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", id },
                 };
                 bool success = await _inpgsqlQuery.ExecuteScalarAsync(
-                    "SELECT fn_currentaffairsbyid(@p_action, @p_id)",
+                    "SELECT fn_editorialsbyid(@p_action, @p_id)",
                     parameters
                 );
                 return success;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "CurrentAffairs not found");
+                _logger.LogError(ex, "Editorials not found");
                 throw;
             }
         }
@@ -179,14 +179,14 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_id", id },
                 };
                 bool success = await _inpgsqlQuery.ExecuteScalarAsync(
-                    "SELECT fn_currentaffairsbyid(@p_action, @p_id)",
+                    "SELECT fn_editorialsbyid(@p_action, @p_id)",
                     parameters
                 );
                 return success;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "CurrentAffairs not found");
+                _logger.LogError(ex, "Editorials not found");
                 throw;
             }
         }

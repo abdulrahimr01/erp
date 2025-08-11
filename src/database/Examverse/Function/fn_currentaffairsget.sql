@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION public.fn_currentaffairsget(
 	p_take integer DEFAULT 10,
 	p_ordercol character varying DEFAULT 'id'::character varying,
 	p_orderdir character varying DEFAULT 'ASC'::character varying)
-    RETURNS TABLE(id bigint, date timestamp without time zone, catagory character varying, slug character varying, content character varying, created_at timestamp without time zone, updated_at timestamp without time zone, isactive boolean, actionby character varying, actiondate timestamp without time zone, title character varying) 
+    RETURNS TABLE(id bigint, date timestamp without time zone, category character varying, slug character varying, content character varying, created_at timestamp without time zone, updated_at timestamp without time zone, isactive boolean, actionby character varying, actiondate timestamp without time zone, title character varying) 
     LANGUAGE 'plpgsql'
     COST 100
     VOLATILE PARALLEL UNSAFE

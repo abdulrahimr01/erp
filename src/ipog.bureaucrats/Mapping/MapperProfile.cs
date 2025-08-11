@@ -78,6 +78,10 @@ namespace ipog.bureaucrats.Mapping
             CreateMap<CurrentAffairs, CurrentAffairsModel>().ReverseMap();
             CreateMap<CurrentAffairs, GetCurrentAffairsModel>();
             CreateMap<CurrentAffairs, CurrentAffairsModelCollection>();
+
+            CreateMap<Editorials, EditorialsModel>().ReverseMap();
+            CreateMap<Editorials, GetEditorialsModel>();
+            CreateMap<Editorials, EditorialsModelCollection>();
         }
     }
 }
