@@ -44,6 +44,7 @@ builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
 builder.Services.AddScoped<ICartpageRepository, CartpageRepository>();
 builder.Services.AddScoped<ICurrentAffairsRepository, CurrentAffairsRepository>();
 builder.Services.AddScoped<IEditorialsRepository, EditorialsRepository>();
+builder.Services.AddScoped<IAboutRepository, AboutRepository>();
 
 builder.Services.AddScoped<ICartpageService, CartpageService>();
 builder.Services.AddScoped<IWishlistService, WishlistService>();
@@ -63,6 +64,7 @@ builder.Services.AddScoped<IContactInfoService, ContactInfoService>();
 builder.Services.AddScoped<IDefaultPageService, DefaultPageService>();
 builder.Services.AddScoped<ICurrentAffairsService, CurrentAffairsService>();
 builder.Services.AddScoped<IEditorialsService, EditorialsService>();
+builder.Services.AddScoped<IAboutService, AboutService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
