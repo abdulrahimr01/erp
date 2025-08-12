@@ -82,6 +82,10 @@ namespace ipog.bureaucrats.Mapping
             CreateMap<Editorials, EditorialsModel>().ReverseMap();
             CreateMap<Editorials, GetEditorialsModel>();
             CreateMap<Editorials, EditorialsModelCollection>();
+
+            CreateMap<About, AboutModel>().ReverseMap();
+            CreateMap<About, GetAboutModel>();
+            CreateMap<About, AboutModelCollection>();
         }
     }
 }
