@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using ipog.bureaucrats.Entity;
 
 namespace ipog.bureaucrats.DataSource.IRepository
@@ -70,9 +71,9 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 {
                     { "p_type", about.Type },
                     { "p_content",about.Content},
-                    { "p_actionby", about.Actionby },
-                    { "p_actiondate", about.Actiondate },
                     { "p_isactive", about.IsActive },
+                    { "p_actionby", about.Actionby },
+                    { "p_actiondate", about.Actiondate }
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
                     "CALL sp_about(@p_type,@p_content, @p_isactive, @p_actionby, @p_actiondate)",
@@ -95,9 +96,9 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 {
                    { "p_type", about.Type },
                     { "p_content",about.Content},
+                    { "p_isactive", about.IsActive },
                     { "p_actionby", about.Actionby },
                     { "p_actiondate", about.Actiondate },
-                    { "p_isactive", about.IsActive },
                     { "p_id", about.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(

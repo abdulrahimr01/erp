@@ -15,13 +15,13 @@ BEGIN
 
 --insert
 IF p_id=0 THEN
-INSERT INTO public.about(type,content,isactive,actionby,actiondate)
+INSERT INTO about(type,content,isactive,actionby,actiondate)
 VALUES(p_type,p_content,p_isactive,p_actionby,p_actiondate);
 END IF;
 
 --update
-IF p_id>0 AND EXISTS (SELECT 1 FROM public.about WHERE id=p_id) THEN
-UPDATE public.about 
+IF p_id>0 AND EXISTS (SELECT 1 FROM about WHERE id=p_id) THEN
+UPDATE about 
 SET type=p_type,content=p_content,isactive=p_isactive,actionby=p_actionby,actiondate=p_actiondate
 WHERE id=p_id;
 END IF;
