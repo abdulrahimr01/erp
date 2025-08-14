@@ -39,20 +39,81 @@ namespace ipog.bureaucrats.Controllers
             return Ok(collection);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Insert([FromBody] BooksModel booksModel)
-        {
-            Response response = await _iBooksService.Insert(booksModel);
-            return Ok(response);
-        }
+       [HttpPost]
+public async Task<IActionResult> Insert([FromForm] BooksFormDto dto)
+{
+    var model = new BooksModel
+    {
+        Id = dto.Id,
+        Title = dto.Title,
+        ExamName = dto.ExamName,
+        Author = dto.Author,
+        Price = dto.Price,
+        OriginalPrice = dto.Originalprice,
+        Description = dto.Description,
+        Details = dto.Details,
+        Stocks = dto.Stocks,
+        IsActive = dto.IsActive,
+        ActionBy = dto.ActionBy,
+        ActionDate = dto.ActionDate,
+        Course = dto.Course
+    };
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] BooksModel booksModel)
-        {
-            Response response = await _iBooksService.Update(booksModel);
-            return Ok(response);
-        }
+    if (dto.FrontImage != null)
+    {
+        using var ms = new MemoryStream();
+        await dto.FrontImage.CopyToAsync(ms);
+        model.FrontImage = ms.ToArray();
+    }
 
+    if (dto.BackImage != null)
+    {
+        using var ms = new MemoryStream();
+        await dto.BackImage.CopyToAsync(ms);
+        model.BackImage = ms.ToArray();
+    }
+
+    var response = await _iBooksService.Insert(model);
+    return Ok(response);
+}
+
+[HttpPut]
+public async Task<IActionResult> Update([FromForm] BooksFormDto dto)
+{
+    var model = new BooksModel
+    {
+        Id = dto.Id,
+        Title = dto.Title,
+        ExamName = dto.ExamName,
+        Author = dto.Author,
+        Price = dto.Price,
+        OriginalPrice = dto.Originalprice,
+        Description = dto.Description,
+        Details = dto.Details,
+        Stocks = dto.Stocks,
+        IsActive = dto.IsActive,
+        ActionBy = dto.ActionBy,
+        ActionDate = dto.ActionDate,
+        Course = dto.Course
+    };
+
+    if (dto.FrontImage != null)
+    {
+        using var ms = new MemoryStream();
+        await dto.FrontImage.CopyToAsync(ms);
+        model.FrontImage = ms.ToArray();
+    }
+
+    if (dto.BackImage != null)
+    {
+        using var ms = new MemoryStream();
+        await dto.BackImage.CopyToAsync(ms);
+        model.BackImage = ms.ToArray();
+    }
+
+    var response = await _iBooksService.Update(model);
+    return Ok(response);
+}
         [HttpDelete]
         public async Task<IActionResult> Delete(long id)
         {
