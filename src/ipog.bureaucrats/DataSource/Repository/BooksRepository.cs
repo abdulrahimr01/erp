@@ -69,7 +69,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
                 {
                     { "p_title", books.Title },
-                    { "p_name", books.Name },
+                    { "p_examname", books.ExamName },
                     { "p_author", books.Author },
                     { "p_price", books.Price },
                     { "p_originalprice", books.Originalprice },
@@ -81,9 +81,10 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_actiondate", books.ActionDate },
                     { "p_frontimage", books.FrontImage },
                     { "p_backimage", books.BackImage },
+                    { "p_course",books.Course}
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_books(@p_title, @p_name, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate,@p_frontimage,@p_backimage)",
+                    "CALL sp_books(@p_title, @p_examname, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate,@p_frontimage,@p_backimage,@p_course)",
                     parameters
                 );
                 return true;
@@ -102,7 +103,7 @@ namespace ipog.bureaucrats.DataSource.IRepository
                 Dictionary<string, object> parameters = new()
                 {
                     { "p_title", books.Title },
-                    { "p_name", books.Name },
+                    { "p_examname", books.ExamName },
                     { "p_author", books.Author },
                     { "p_price", books.Price },
                     { "p_originalprice", books.Originalprice },
@@ -114,10 +115,11 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_actiondate", books.ActionDate },
                     { "p_frontimage", books.FrontImage },
                     { "p_backimage", books.BackImage },
+                    { "p_course",books.Course},
                     { "p_id", books.Id },
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_books(@p_title, @p_name, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate,@p_frontimage,@p_backimage, @p_id)",
+                    "CALL sp_books(@p_title, @p_examname, @p_author, @p_price, @p_originalprice, @p_description, @p_details, @p_stocks, @p_isactive, @p_actionby, @p_actiondate,@p_frontimage,@p_backimage,@p_course, @p_id)",
                     parameters
                 );
                 return true;

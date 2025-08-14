@@ -73,10 +73,11 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_content",about.Content},
                     { "p_isactive", about.IsActive },
                     { "p_actionby", about.Actionby },
-                    { "p_actiondate", about.Actiondate }
+                    { "p_actiondate", about.Actiondate },
+                    { "p_title",about.Title}
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_about(@p_type,@p_content, @p_isactive, @p_actionby, @p_actiondate)",
+                    "CALL sp_about(@p_type,@p_content, @p_isactive, @p_actionby, @p_actiondate,@p_title)",
                     parameters
                 );
                 return true;
@@ -100,9 +101,10 @@ namespace ipog.bureaucrats.DataSource.IRepository
                     { "p_actionby", about.Actionby },
                     { "p_actiondate", about.Actiondate },
                     { "p_id", about.Id },
+                    { "p_title",about.Title}
                 };
                 await _inpgsqlQuery.ExecuteQueryAsync(
-                    "CALL sp_about(@p_type,@p_content,@p_isactive, @p_actionby, @p_actiondate, @p_id)",
+                    "CALL sp_about(@p_type,@p_content,@p_isactive, @p_actionby, @p_actiondate,@p_title, @p_id)",
                     parameters
                 );
                 return true;

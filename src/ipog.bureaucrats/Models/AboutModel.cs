@@ -8,6 +8,7 @@ namespace ipog.bureaucrats.Models
         public bool IsActive { get; set; }
         public string? ActionBy { get; set; }
         public DateTime? ActionDate { get; set; }
+        public string? Title { get; set; }
     }
 
     public class GetAboutModel : AboutModel

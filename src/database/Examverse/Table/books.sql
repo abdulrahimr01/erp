@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS public.books
 (
     id bigint NOT NULL DEFAULT nextval('books_id_seq'::regclass),
     title character varying(100) COLLATE pg_catalog."default" NOT NULL,
-    name character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    examname character varying(100) COLLATE pg_catalog."default" NOT NULL,
     author character varying(100) COLLATE pg_catalog."default",
     price character varying(10) COLLATE pg_catalog."default" NOT NULL,
     originalprice character varying(10) COLLATE pg_catalog."default" NOT NULL,
@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS public.books
     actiondate timestamp without time zone NOT NULL,
     frontimage bytea,
     backimage bytea,
+    course character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT books_pkey PRIMARY KEY (id)
 )
 
