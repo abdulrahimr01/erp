@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS public.about
     isactive boolean NOT NULL,
     actionby character varying(50) COLLATE pg_catalog."default" NOT NULL,
     actiondate timestamp without time zone NOT NULL,
+    title character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT about_pkey PRIMARY KEY (id)
 )
 

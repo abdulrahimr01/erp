@@ -8,5 +8,6 @@ namespace ipog.bureaucrats.Entity
         public bool IsActive { get; set; }
         public string? Actionby { get; set; }
         public DateTime? Actiondate { get; set; }
+        public string? Title { get; set; }
     }
 }

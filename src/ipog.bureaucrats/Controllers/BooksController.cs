@@ -1,6 +1,7 @@
 using ipog.bureaucrats.Models;
 using ipog.bureaucrats.Workflow.IServices;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ipog.bureaucrats.Controllers
 {
@@ -15,63 +16,107 @@ namespace ipog.bureaucrats.Controllers
             _iBooksService = iBooksService;
         }
 
-        // GET: Get Books
-        [HttpGet]
+        // GET by ID
+        [HttpGet("{id:long}")]
         public async Task<IActionResult> GetById(long id)
         {
-            GetResponse<GetBooksModel> response = await _iBooksService.GetById(id);
+            var response = await _iBooksService.GetById(id);
             return Ok(response);
         }
 
-        // GET: Get All Books
-        [HttpGet("GetAll")]
+        // GET all
+        [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
-            CollectionResponse<BooksModelCollection> collection = await _iBooksService.GetAll();
+            var collection = await _iBooksService.GetAll();
             return Ok(collection);
         }
 
-        // POST: Filter Books
-        [HttpPost("Filter")]
+        // POST filter
+        [HttpPost("filter")]
         public async Task<IActionResult> GetFilter([FromBody] PaginationModel paginationModel)
         {
-            BooksModelCollection collection = await _iBooksService.GetFilter(paginationModel);
+            var collection = await _iBooksService.GetFilter(paginationModel);
             return Ok(collection);
         }
 
+        // POST insert
         [HttpPost]
-        public async Task<IActionResult> Insert([FromBody] BooksModel booksModel)
+        public async Task<IActionResult> Insert([FromForm] BooksFormDto dto)
         {
-            Response response = await _iBooksService.Insert(booksModel);
+            var model = MapDtoToModel(dto);
+            var response = await _iBooksService.Insert(model);
             return Ok(response);
         }
 
+        // PUT update
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] BooksModel booksModel)
+        public async Task<IActionResult> Update([FromForm] BooksFormDto dto)
         {
-            Response response = await _iBooksService.Update(booksModel);
+            var model = MapDtoToModel(dto);
+            var response = await _iBooksService.Update(model);
             return Ok(response);
         }
 
-        [HttpDelete]
+        // DELETE by ID
+        [HttpDelete("{id:long}")]
         public async Task<IActionResult> Delete(long id)
         {
-            Response response = await _iBooksService.Delete(id);
+            var response = await _iBooksService.Delete(id);
             return Ok(response);
         }
 
-        [HttpPatch("active")]
+        // PATCH set active
+        [HttpPatch("{id:long}/active")]
         public async Task<IActionResult> SetActiveStatus(long id)
         {
-            Response response = await _iBooksService.SetActiveStatus(id);
+            var response = await _iBooksService.SetActiveStatus(id);
             return Ok(response);
         }
 
-        [HttpPatch("inactive")]
+        // PATCH set inactive
+        [HttpPatch("{id:long}/inactive")]
         public async Task<IActionResult> SetInActiveStatus(long id)
         {
-            Response response = await _iBooksService.SetInActiveStatus(id);
+            var response = await _iBooksService.SetInActiveStatus(id);
             return Ok(response);
+        }
+
+        // Helper: Map DTO to Model
+        private BooksModel MapDtoToModel(BooksFormDto dto)
+        {
+            var model = new BooksModel
+            {
+                Id = dto.Id,
+                Title = dto.Title,
+                ExamName = dto.ExamName,
+                Author = dto.Author,
+                Price = dto.Price,
+                OriginalPrice = dto.Originalprice,
+                Description = dto.Description,
+                Details = dto.Details,
+                Stocks = dto.Stocks,
+                IsActive = dto.IsActive,
+                ActionBy = dto.ActionBy,
+                ActionDate = dto.ActionDate,
+                Course = dto.Course
+            };
+
+            if (dto.FrontImage != null)
+            {
+                using var ms = new MemoryStream();
+                dto.FrontImage.CopyTo(ms);
+                model.FrontImage = ms.ToArray();
+            }
+
+            if (dto.BackImage != null)
+            {
+                using var ms = new MemoryStream();
+                dto.BackImage.CopyTo(ms);
+                model.BackImage = ms.ToArray();
+            }
+
+            return model;
         }
     }
 }

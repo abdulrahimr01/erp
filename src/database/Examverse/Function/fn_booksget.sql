@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION public.fn_booksget(
 	p_take integer DEFAULT 10,
 	p_ordercol character varying DEFAULT 'id'::character varying,
 	p_orderdir character varying DEFAULT 'ASC'::character varying)
-    RETURNS TABLE(id bigint, title character varying, name character varying, author character varying, price character varying, originalprice character varying, description character varying, details character varying, stocks character varying, isactive boolean, actionby character varying, actiondate timestamp without time zone, frontimage bytea, backimage bytea) 
+    RETURNS TABLE(id bigint, title character varying, examname character varying, author character varying, price numeric, originalprice numeric, description character varying, details character varying, stocks integer, isactive boolean, actionby character varying, actiondate timestamp without time zone, frontimage bytea, backimage bytea, course character varying) 
     LANGUAGE 'plpgsql'
     COST 100
     VOLATILE PARALLEL UNSAFE
